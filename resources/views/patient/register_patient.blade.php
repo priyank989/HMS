@@ -22,16 +22,16 @@
     style="margin-bottom:0;margin-top:8vh" @endif class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-{{--        @if (session()->has('regpsuccess'))--}}
+        @if (session()->has('regpsuccess'))
         <div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <h4><i class="icon fa fa-check"></i> Success!</h4>
             <button
-                onclick="window.open('{{route('pregcard',[2103306, 2])}}','myWin','scrollbars=yes,width=830,height=500,location=no').focus();"
+                onclick="window.open('{{route('pregcard',[session()->get('pid'), session()->get('did')])}}','myWin','scrollbars=yes,width=830,height=500,location=no').focus();"
                 class="btn btn-warning ml-5"><i class="fas fa-print"></i> Print Registration Card </button>
             {{session()->get('regpsuccess')}}
         </div>
-{{--        @endif--}}
+        @endif
         @if (session()->has('regpfail'))
         <div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

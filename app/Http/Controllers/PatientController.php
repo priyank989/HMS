@@ -437,11 +437,13 @@ class PatientController extends Controller
     public function regcard($id, $did)
     {
         $patient = Patients::find($id);
+        $user = User::find($did);
         $payment = Payment::where('doctor_id', $did)->where('patient_id', $id)->first();
         $url = Storage::url($id . '.png');
-//        dd($payment);
         $data = [
             'name' => $patient->name,
+            'doctor_name' => $user->name,
+            'address' => $patient->address,
             'sex' => $patient->sex,
             'id' => $patient->id,
             'reg' => explode(" ", $patient->created_at)[0],

@@ -31,18 +31,20 @@
         <div class="mx-auto row">
             <div class="col-3"></div>
             <div style="margin-top:30vh;" class="col-6">
-                <div style="height:6.5cm;width:11cm" class="border border-dark rounded bg-light">
+                <div style="height:8cm;width:14cm" class="border border-dark rounded bg-light">
                     <div class="rounded"
-                        style="margin-left:0.01cm;height:1.7cm;width:10.93cm;background-color:rgb(204, 99, 14)">
+                        style="margin-left:0.01cm;height:1.7cm;width:13.96cm;background-color:rgb(204, 99, 14)">
                         <h4 style="padding-top: 16px;font-weight: lighter"
                             class="text-uppercase text-center text-white">Shri Pardhaan Hospitals</h4>
                     </div>
                     <div style="margin-left:1px;font-size:13px" class="row mt-2">
 
                         <div class="col-4">
-                            <span>Reg. Num.<br></span>
-                            <span>Name<br></span>
-                            <span>Birth Day & Sex<br></span>
+                            <span>Patient Name<br></span>
+                            <span>Doctor Name<br></span>
+                            <span>Age<br></span>
+                            <span>Gender<br></span>
+                            <span>Address<br></span>
                             <span>Doctor Fees<br></span>
                             <span>Registration Fess<br></span>
                             <span>Total<br></span>
@@ -52,14 +54,21 @@
                             <span>: <br></span>
                             <span>: <br></span>
                             <span>: <br></span>
-                            <span>: </span>
-                        </div>
+                            <span>: <br></span>
+                            <span>: <br></span>
+                            <span>: <br></span>
+                            <span>: <br></span>
+                            <span>: <br></span>
+                            <span>: <br></span>
+                         </div>
                         <div class="col-7 m-0 p-0">
                             <div class="row m-0 p-0">
                                 <div class=" m-0 p-0 col-7">
-                                    <span>{{$id}}<br></span>
                                     <span>{{$name}}<br></span>
-                                    <span>{{$dob}} {{ucfirst($sex)}}<br></span>
+                                    <span>{{$doctor_name}}<br></span>
+                                    <span>{{\Carbon\Carbon::parse($dob)->diff(\Carbon\Carbon::now())->format('%y years, %m months and %d days')}} <br></span>
+                                    <span>{{ucfirst($sex)}}<br></span>
+                                    <span>{{$address}}<br></span>
                                     <span>{{$amount}}<br></span>
                                     <span>50.00<br></span>
                                     <span>{{$amount + 50}}<br></span>

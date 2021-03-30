@@ -22,16 +22,16 @@
     style="margin-bottom:0;margin-top:8vh" @endif class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-        @if (session()->has('regpsuccess'))
+{{--        @if (session()->has('regpsuccess'))--}}
         <div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <h4><i class="icon fa fa-check"></i> Success!</h4>
             <button
-                onclick="window.open('{{route('pregcard',session()->get('pid'))}}','myWin','scrollbars=yes,width=830,height=500,location=no').focus();"
+                onclick="window.open('{{route('pregcard',[session()->get('pid'), session()->get('did')])}}','myWin','scrollbars=yes,width=830,height=500,location=no').focus();"
                 class="btn btn-warning ml-5"><i class="fas fa-print"></i> Print Registration Card </button>
             {{session()->get('regpsuccess')}}
         </div>
-        @endif
+{{--        @endif--}}
         @if (session()->has('regpfail'))
         <div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -129,6 +129,25 @@
                                     style="display:none;" class="far text-dark fa-check-circle"></i> </button>
 
                             <input type="text" style="display:none" id="regp_photo" name="regp_photo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor')}} <span
+                                style="color:red">*</span></label>
+                        <div class="col-sm-10">
+                            <select required class="form-control" name="doctor_id">
+                                @foreach ($doctors as $doctor)
+                                    <option  value="{{$doctor->id}}">{{$doctor->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor Fees')}} <span
+                                style="color:red">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text"  class="form-control pull-right"
+                                   name="amount" placeholder="Amount">
                         </div>
                     </div>
                     <div class="box-footer">

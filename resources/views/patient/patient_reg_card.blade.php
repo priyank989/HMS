@@ -43,6 +43,8 @@
                             <span>Reg. Num.<br></span>
                             <span>Name<br></span>
                             <span>Birth Day & Sex<br></span>
+                            <span>Doctor Fees<br></span>
+                            <span>Registration Fess<br></span>
                             <span>Registration Date<br></span>
                         </div>
                         <div class="col-1 m-0 p-0 text-left">
@@ -57,28 +59,19 @@
                                     <span>{{$id}}<br></span>
                                     <span>{{$name}}<br></span>
                                     <span>{{$dob}} {{ucfirst($sex)}}<br></span>
-                                    <span>{{$reg}}</span>
+                                    <span>{{$reg}}<br></span>
+                                    <span>{{$amount}}<br></span>
+                                    <span>50.00</span>
                                 </div>
-                                <div class="col-3 m-0 p-0">
-                                    <img src="{{$url}}" style="width: 70px;height:70px;" alt="...">
-                                </div>
+{{--                                <div class="col-3 m-0 p-0">--}}
+{{--                                    <img src="{{$url}}" style="width: 70px;height:70px;" alt="...">--}}
+{{--                                </div>--}}
                             </div>
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col"></div>
-                        <div class="col">
-                            <div class="mt-3 mx-auto">
 
-                                <?php 
-                                        echo '<img src="/' . DNS1D::getBarcodePNGPath(preg_replace('/\s+/', '', $id), "C39+",1.5,70,array(0,0,0), true) . '" alt="barcode"   />';
-                                            ?>
-                            </div>
 
-                        </div>
-                        <div class="col"></div>
-                    </div>
                 </div>
             </div>
             <div class="col-3">

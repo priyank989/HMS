@@ -40,4 +40,11 @@ class User extends Authenticatable
     public function attendanceRecords(){
         return $this->hasMany('\App\Attendance');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function patients(){
+        return $this->belongsToMany(User::class, 'doctor_patients', 'doctor_id', 'patient_id');
+    }
 }

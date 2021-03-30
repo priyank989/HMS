@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use App\Clinic;
+use App\DoctorPatient;
 use App\Http\Controllers\Redirect;
 use App\inpatient;
 use App\Medicine;
 use App\Patients;
+use App\Payment;
 use App\Prescription;
 use App\Prescription_Medicine;
 use App\Ward;
@@ -45,13 +47,14 @@ class PatientController extends Controller
         }else{
             return redirect(route("inPatientReport"))->with('fail',"No Results Found");
         }
-      
+
     }
 
     public function index()
     {
         $user = Auth::user();
-        return view('patient.register_patient', ['title' => $user->name]);
+        $doctors = User::where('user_type', 'doctor')->get();
+        return view('patient.register_patient', ['title' => $user->name, 'doctors' => $doctors]);
     }
 
     public function patientHistory($id)
@@ -160,11 +163,26 @@ class PatientController extends Controller
             $patient->save();
             session()->flash('regpsuccess', 'Patient ' . $request->reg_pname . ' Registered Successfully !');
             session()->flash('pid', "$reg_num");
+            session()->flash('did', "$request->doctor_id");
 
             $image = $request->regp_photo; // your base64 encoded
             $image = str_replace('data:image/png;base64,', '', $image);
             $image = str_replace(' ', '+', $image);
             \Storage::disk('local')->put("public/" . $reg_num . ".png", base64_decode($image));
+
+            $doctor_patient = new DoctorPatient();
+            $doctor_patient->doctor_id = $request->doctor_id;
+            $doctor_patient->patient_id = $patient->id;
+            $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
+            $doctor_patient->registration_date = Carbon::now()->addDay(21)->toDateTimeString();
+            $doctor_patient->save();
+
+
+            $payment = new Payment();
+            $payment->doctor_id = $request->doctor_id;
+            $payment->patient_id = $patient->id;
+            $payment->amount = $request->amount;
+            $payment->save();
 
             // Log Activity
             activity()->performedOn($patient)->withProperties(['Patient ID' => $reg_num])->log('Patient Registration Success');
@@ -415,10 +433,12 @@ class PatientController extends Controller
         return view('patient.create_channel_view', ['title' => "Channel Appointments", 'appointments' => $appointments]);
     }
 
-    public function regcard($id)
+    public function regcard($id, $did)
     {
         $patient = Patients::find($id);
+        $payment = Payment::where('doctor_id', $did)->where('patient_id', $id)->first();
         $url = Storage::url($id . '.png');
+//        dd($payment);
         $data = [
             'name' => $patient->name,
             'sex' => $patient->sex,
@@ -426,6 +446,7 @@ class PatientController extends Controller
             'reg' => explode(" ", $patient->created_at)[0],
             'dob' => $patient->bod,
             'url' => $url,
+            'amount' => $payment->amount,
         ];
         return view('patient.patient_reg_card', $data);
     }
@@ -472,10 +493,10 @@ class PatientController extends Controller
             ]);
         }
         }
-        
+
         else
         {
- 
+
         $patient = DB::table('patients')
                         ->join('appointments', 'patients.id', '=', 'appointments.patient_id')
                         ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'appointments.admit as ad', 'patients.bod as bod','appointments.number as appnum','appointments.doctor_id as D1')
@@ -519,7 +540,7 @@ class PatientController extends Controller
         $INPtable->patient_id = $request->reg_pid;
         $INPtable->ward_id = $request->reg_ipwardno;
         $INPtable->patient_inventory = $request->reg_ipinventory;
-    
+
         $INPtable->house_doctor = $request->reg_iphousedoc;
         $INPtable->approved_doctor = $request->reg_ipapprovedoc;
         $INPtable->disease = $request->reg_admitofficer1;
@@ -535,7 +556,7 @@ class PatientController extends Controller
         $newFB = $getFB->free_beds-=1;
         Ward::where('ward_no', $request->reg_ipwardno)->update(['free_beds' => $newFB]);
 
-      
+
         return redirect()->back()->with('regpsuccess', "Inpatient Successfully Registered");
     }
 
@@ -672,7 +693,7 @@ public function addChannel(Request $request)
     {
         // dd($result->reg_pbd);
         $user = Auth::user();
-        
+
         $query = DB::table('patients')
             ->where('id', $result->reg_pid)
             ->update(array(

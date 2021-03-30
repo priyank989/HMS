@@ -35,7 +35,7 @@
                     <div class="rounded"
                         style="margin-left:0.01cm;height:1.7cm;width:10.93cm;background-color:rgb(204, 99, 14)">
                         <h4 style="padding-top: 16px;font-weight: lighter"
-                            class="text-uppercase text-center text-white">Ayruvedic Hospital Kesbawa</h4>
+                            class="text-uppercase text-center text-white">Shri Pardhaan Hospitals</h4>
                     </div>
                     <div style="margin-left:1px;font-size:13px" class="row mt-2">
 
@@ -45,6 +45,7 @@
                             <span>Birth Day & Sex<br></span>
                             <span>Doctor Fees<br></span>
                             <span>Registration Fess<br></span>
+                            <span>Total<br></span>
                             <span>Registration Date<br></span>
                         </div>
                         <div class="col-1 m-0 p-0 text-left">
@@ -59,9 +60,10 @@
                                     <span>{{$id}}<br></span>
                                     <span>{{$name}}<br></span>
                                     <span>{{$dob}} {{ucfirst($sex)}}<br></span>
-                                    <span>{{$reg}}<br></span>
                                     <span>{{$amount}}<br></span>
-                                    <span>50.00</span>
+                                    <span>50.00<br></span>
+                                    <span>{{$amount + 50}}<br></span>
+                                    <span>{{$reg}}</span>
                                 </div>
 {{--                                <div class="col-3 m-0 p-0">--}}
 {{--                                    <img src="{{$url}}" style="width: 70px;height:70px;" alt="...">--}}

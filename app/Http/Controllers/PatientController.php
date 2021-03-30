@@ -117,7 +117,8 @@ class PatientController extends Controller
 
     public function searchPatient(Request $request)
     {
-        return view('patient.search_patient_view', ['title' => "Search Patient", "old_keyword" => null, "search_result" => ""]);
+        $patients = Patients::all();
+        return view('patient.search_patient_view', ['title' => "Search Patient", "old_keyword" => null, "search_result" => "", 'patients' => $patients]);
     }
 
     public function patientData(Request $request)

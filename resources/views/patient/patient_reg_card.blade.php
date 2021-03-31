@@ -35,7 +35,7 @@
                     <div class="rounded"
                         style="margin-left:0.01cm;height:1.7cm;width:13.96cm;background-color:rgb(204, 99, 14)">
                         <h4 style="padding-top: 16px;font-weight: lighter"
-                            class="text-uppercase text-center text-white">Shri Pardhaan Hospitalßß</h4>
+                            class="text-uppercase text-center text-white">Shri Pardhaan Hospital</h4>
                     </div>
                     <div style="margin-left:1px;font-size:13px" class="row mt-2">
 
@@ -66,7 +66,7 @@
                                 <div class=" m-0 p-0 col-7">
                                     <span>{{$name}}<br></span>
                                     <span>{{$doctor_name}}<br></span>
-                                    <span>{{\Carbon\Carbon::parse($dob)}} <br></span>
+                                    <span>{{\Carbon\Carbon::parse($dob)->age}} <br></span>
                                     <span>{{ucfirst($sex)}}<br></span>
                                     <span>{{$address}}<br></span>
                                     <span>{{$amount}}<br></span>

@@ -27,7 +27,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <h4><i class="icon fa fa-check"></i> Success!</h4>
             <button
-                onclick="window.open('{{route('pregcard',[session()->get('pid'), session()->get('did')])}}','myWin','scrollbars=yes,width=830,height=500,location=no').focus();"
+                onclick="window.open('{{route('pregcard',[session()->get('pid'), session()->get('did')])}}','myWin','scrollbars=yes,width=930,height=800,location=no').focus();"
                 class="btn btn-warning ml-5"><i class="fas fa-print"></i> Print Registration Card </button>
             {{session()->get('regpsuccess')}}
         </div>

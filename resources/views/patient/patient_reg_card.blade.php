@@ -40,6 +40,7 @@
                     <div style="margin-left:1px;font-size:13px" class="row mt-2">
 
                         <div class="col-4">
+                            <span>UHID<br></span>
                             <span>Patient Name<br></span>
                             <span>Doctor Name<br></span>
                             <span>Age<br></span>
@@ -49,8 +50,11 @@
                             <span>Registration Fess<br></span>
                             <span>Total<br></span>
                             <span>Registration Date<br></span>
+                            <span>Valid Till<br></span>
                         </div>
                         <div class="col-1 m-0 p-0 text-left">
+                            <span>: <br></span>
+                            <span>: <br></span>
                             <span>: <br></span>
                             <span>: <br></span>
                             <span>: <br></span>
@@ -64,6 +68,7 @@
                         <div class="col-7 m-0 p-0">
                             <div class="row m-0 p-0">
                                 <div class=" m-0 p-0 col-7">
+                                    <span>{{$id}}<br></span>
                                     <span>{{$name}}<br></span>
                                     <span>{{$doctor_name}}<br></span>
                                     <span>{{\Carbon\Carbon::parse($dob)->age}} <br></span>
@@ -72,7 +77,8 @@
                                     <span>{{$amount}}<br></span>
                                     <span>50.00<br></span>
                                     <span>{{$amount + 50}}<br></span>
-                                    <span>{{$reg}}</span>
+                                    <span>{{\Carbon\Carbon::parse($reg)->format('d/M/Y')}}</span>
+                                    <span>{{$valid}}</span>
                                 </div>
 {{--                                <div class="col-3 m-0 p-0">--}}
 {{--                                    <img src="{{$url}}" style="width: 70px;height:70px;" alt="...">--}}

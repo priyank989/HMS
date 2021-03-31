@@ -18,7 +18,12 @@ class CreatePaymentsTable extends Migration
             $table->integer('doctor_id');
             $table->integer('patient_id');
             $table->string('bill_type')->nullable()->default(null);
-            $table->decimal('amount', 8, 2);
+            $table->string('service_name')->nullable()->default(null);
+            $table->string('service_name')->nullable()->default(null);
+            $table->string('payment_type')->nullable()->default(null);
+            $table->string('payment_status')->nullable()->default(null);
+            $table->decimal('total_amount', 8, 2);
+            $table->decimal('paid_amount', 8, 2);
             $table->timestamps();
         });
     }

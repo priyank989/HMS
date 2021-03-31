@@ -85,7 +85,74 @@
 </div>
 
 </form>
+@if(!$search_result)
+<div class="tab-pane @if (!session('unsuccess')&&!session('success')||session('successnotice')) active @endif"
+     id="activity">
+    <div class="box">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <div class="row">
+                    @if (session('successnotice'))
+                        <div class="alert alert-success">
+                            {{ session('successnotice') }}
+                        </div>
+                    @endif
+{{--                    <div class="col-md-10">--}}
+{{--                        <br>--}}
+{{--                        <form class="form-inline" method="POST" action="{{route('addnotice')}}">--}}
+{{--                            @csrf--}}
+{{--                            <div class="form-group mb-2">--}}
+{{--                                <input type="text" class="form-control" name="subject"--}}
+{{--                                       placeholder="enter subject">--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group mx-sm-3 mb-2">--}}
+{{--                                <input type="text" class="form-control" name="description"--}}
+{{--                                       placeholder="enter description">--}}
+{{--                            </div>--}}
+{{--                            <button type="submit" class="btn btn-warning mb-2">Add</button>--}}
+{{--                        </form>--}}
+{{--                    </div>--}}
+                    <div class="col-md-2"></div>
 
+                    <div class="col-sm-12">
+                        <br>
+                        <table id="example1" class="table table-bordered table-striped dataTable"
+                               role="grid" aria-describedby="example1_info">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Gender</th>
+                                <th>Date of birth</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($patients as $patient)
+                                <tr>
+                                    <td>{{$patient->name}}</td>
+                                    <td>{{$patient->address}}</td>
+                                    <td>{{$patient->sex}}</td>
+                                    <td>{{\Carbon\Carbon::parse($patient->bod)->format('d/M/Y')}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                            <tfoot>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Gender</th>
+                            <th>Date of birth</th>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>
+@endif
 @if($search_result)
 @if(!$search_result->isEmpty())
 
@@ -176,10 +243,10 @@
                                 <button type="button" onclick="go('{{$patient->id}}')" class="btn bg-navy"><i class="far fa-id-card"></i> {{__('Profile')}}</button>
                             <button @if($patient->trashed()) type="button" disabled @endif class="btn btn-warning"><i class="fas fa-edit"></i> {{__('Edit')}}</button>
                             </div>
-                            
+
                         </div>
 
-                        
+
 
                     </div>
                 </div>
@@ -187,7 +254,7 @@
             </form>
         </div>
     </div>
-    
+
     <div class="col-md-1"></div>
 </div>
 @endforeach
@@ -207,5 +274,18 @@
 
 @endif
 @endif
+<script>
+    $(function () {
 
+        $('#example1').DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+    })
+
+</script>
 @endsection

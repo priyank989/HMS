@@ -118,6 +118,7 @@ class PatientController extends Controller
     public function searchPatient(Request $request)
     {
         $patients = Patients::all();
+//        dd($patients);
         return view('patient.search_patient_view', ['title' => "Search Patient", "old_keyword" => null, "search_result" => "", 'patients' => $patients]);
     }
 
@@ -440,6 +441,7 @@ class PatientController extends Controller
         $user = User::find($did);
         $payment = Payment::where('doctor_id', $did)->where('patient_id', $id)->first();
         $url = Storage::url($id . '.png');
+        $doctor_patient = DoctorPatient::where('doctor_id', $did)->where('patient_id', $id)->first();
         $data = [
             'name' => $patient->name,
             'doctor_name' => $user->name,
@@ -447,6 +449,7 @@ class PatientController extends Controller
             'sex' => $patient->sex,
             'id' => $patient->id,
             'reg' => explode(" ", $patient->created_at)[0],
+            'valid' => $doctor_patient->valid_till,
             'dob' => $patient->bod,
             'url' => $url,
             'amount' => $payment->amount,

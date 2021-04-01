@@ -12,7 +12,7 @@ use App\Patients;
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <style>
     @media print
-{    
+{
 .no-print, .no-print *
 {
     display: none !important;
@@ -28,9 +28,10 @@ use App\Patients;
         <div class="col-md-3"></div>
         <div class="box-header with-border">
             <h2 class="text-center text-upppercase">
-                AYRUVEDA HOSPITAL KESBAWA<br>
+                A Unit of Shree Pradhaan Hospital<br>
                 <small class="small">Discharge Reciept</small>
             </h2>
+            <h3></h3>
             <br>
             Patient Name: {{Patients::find($INPtableUpdate->patient_id)->name}}<br>
             Patient ID: {{Patients::find($INPtableUpdate->patient_id)->id}}<br>

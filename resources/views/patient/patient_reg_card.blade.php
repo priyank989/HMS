@@ -35,7 +35,7 @@
                     <div class="rounded"
                         style="margin-left:0.01cm;height:1.7cm;width:13.96cm;background-color:rgb(204, 99, 14)">
                         <h4 style="padding-top: 16px;font-weight: lighter"
-                            class="text-uppercase text-center text-white">Shri Pardhaan Hospital</h4>
+                            class="text-uppercase text-center text-white">Shree Pradhaan Hospital</h4>
                     </div>
                     <div style="margin-left:1px;font-size:13px" class="row mt-2">
 
@@ -77,8 +77,8 @@
                                     <span>{{$amount}}<br></span>
                                     <span>50.00<br></span>
                                     <span>{{$amount + 50}}<br></span>
-                                    <span>{{\Carbon\Carbon::parse($reg)->format('d/M/Y')}}</span>
-                                    <span>{{\Carbon\Carbon::parse($reg)->addDay(21)->format('d/M/Y')}}</span>
+                                    <span>{{\Carbon\Carbon::parse($reg)->format('d-M-Y')}}<br></span>
+                                    <span>{{\Carbon\Carbon::parse($reg)->addDay(20)->format('d-M-Y')}}</span>
                                 </div>
 {{--                                <div class="col-3 m-0 p-0">--}}
 {{--                                    <img src="{{$url}}" style="width: 70px;height:70px;" alt="...">--}}

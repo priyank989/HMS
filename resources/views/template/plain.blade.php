@@ -15,7 +15,7 @@ $outlet = 'Rural Ayruvedic Hospital Kesbawa';
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Shri Pardhaan Hospitals | @yield('title')</title>
+    <title>Shri Pardhaan Hospital | @yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -249,7 +249,7 @@ $outlet = 'Rural Ayruvedic Hospital Kesbawa';
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini">HMS</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg">Shri Pardhaan Hospitals</span>
+                <span class="logo-lg">Shri Pardhaan Hospital</span>
             </a>
 
             <!-- Header Navbar -->
@@ -400,7 +400,7 @@ $outlet = 'Rural Ayruvedic Hospital Kesbawa';
                 Version 1.0
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; {{date('Y')}} <a href="#">Shri Pardhaan Hospitals Systems</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; {{date('Y')}} <a href="#">Shri Pardhaan Hospital Systems</a>.</strong> All rights reserved.
         </footer>
 
 

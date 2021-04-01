@@ -10,7 +10,7 @@
                 <div class="col-6">
                     <img class="text-center mt-5 mx-auto d-block border-0 img-thumbnail" style="border-radius:100%"
                         src="./images/logo.png" alt="">
-                    <h3 class="mt-2 text-center mb-5">Shri Pardhaan Hospitals</h3>
+                    <h3 class="mt-2 text-center mb-5">Shri Pardhaan Hospital</h3>
                 </div>
                 <div class="col-6 mt-2">
                     <form method="post" action="{{ route('login') }}">

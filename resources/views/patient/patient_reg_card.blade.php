@@ -78,7 +78,7 @@
                                     <span>50.00<br></span>
                                     <span>{{$amount + 50}}<br></span>
                                     <span>{{\Carbon\Carbon::parse($reg)->format('d/M/Y')}}</span>
-                                    <span>{{$valid}}</span>
+                                    <span>{{\Carbon\Carbon::parse($reg)->addDay(21)->format('d/M/Y')}}</span>
                                 </div>
 {{--                                <div class="col-3 m-0 p-0">--}}
 {{--                                    <img src="{{$url}}" style="width: 70px;height:70px;" alt="...">--}}

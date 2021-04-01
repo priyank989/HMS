@@ -75,144 +75,144 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-3">
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">{{__('Quick Reports')}}</h3>
-            </div>
-            <div class="box-body list-group">
-                @if(Auth::user()->user_type=='doctor' || Auth::user()->user_type=='admin')
-                <a href="{{route('mon_stat_report')}}" class="list-group-item list-group-item-action btn btn-danger">
-                   {{ __('Monthly Statistic Report')}}
-                </a>
-                @endif
-                @if(Auth::user()->user_type=='doctor' || Auth::user()->user_type=='admin')
-                <a href="{{route('stats')}}" class="list-group-item mt-4 list-group-item-action btn btn-warning">
-                    {{__('Statistics')}}
-                </a>
-                @endif
+{{--<div class="row">--}}
+{{--    <div class="col-md-3">--}}
+{{--        <div class="box box-info">--}}
+{{--            <div class="box-header with-border">--}}
+{{--                <h3 class="box-title">{{__('Quick Reports')}}</h3>--}}
+{{--            </div>--}}
+{{--            <div class="box-body list-group">--}}
+{{--                @if(Auth::user()->user_type=='doctor' || Auth::user()->user_type=='admin')--}}
+{{--                <a href="{{route('mon_stat_report')}}" class="list-group-item list-group-item-action btn btn-danger">--}}
+{{--                   {{ __('Monthly Statistic Report')}}--}}
+{{--                </a>--}}
+{{--                @endif--}}
+{{--                @if(Auth::user()->user_type=='doctor' || Auth::user()->user_type=='admin')--}}
+{{--                <a href="{{route('stats')}}" class="list-group-item mt-4 list-group-item-action btn btn-warning">--}}
+{{--                    {{__('Statistics')}}--}}
+{{--                </a>--}}
+{{--                @endif--}}
 
-                <a href="{{route('attendance_report')}}"
-                    class="list-group-item mt-4 list-group-item-action btn btn-success">
-                    {{__('Attendance Report')}}
-                </a>
-                @if(Auth::user()->user_type!='pharmacist')
-                <a href="{{route('clinic_reports')}}" class="list-group-item mt-4 list-group-item-action btn btn-info">
-                    {{__('Clinic Report')}}
-                </a>
-                @endif
-            </div>
-        </div>
-    </div>
-    <div class="col-md-9">
-        <div class="box box-default col-md-12">
+{{--                <a href="{{route('attendance_report')}}"--}}
+{{--                    class="list-group-item mt-4 list-group-item-action btn btn-success">--}}
+{{--                    {{__('Attendance Report')}}--}}
+{{--                </a>--}}
+{{--                @if(Auth::user()->user_type!='pharmacist')--}}
+{{--                <a href="{{route('clinic_reports')}}" class="list-group-item mt-4 list-group-item-action btn btn-info">--}}
+{{--                    {{__('Clinic Report')}}--}}
+{{--                </a>--}}
+{{--                @endif--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    <div class="col-md-9">--}}
+{{--        <div class="box box-default col-md-12">--}}
 
-            <div class="box-header with-border">
-                <h3 class="box-title">{{__('Quick Links')}}</h3>
-            </div>
+{{--            <div class="box-header with-border">--}}
+{{--                <h3 class="box-title">{{__('Quick Links')}}</h3>--}}
+{{--            </div>--}}
 
-            <div class="box-body">
-                @if(Auth::user()->user_type!='pharmacist')
-                <div class="col-sm-2">
-                    <a href="{{route('patient')}}" class="btn btn-app">
-                        <i class="ion ion-person-add"></i> {{__('Register out-patient')}}
-                    </a>
-                </div>
-
-
-                <!-- ./col -->
-                <div class="col-sm-2">
-                    <a href="{{route('searchPatient')}}" class="btn btn-app">
-                        <i class="ion ion-stats-bars"></i>{{__('Search Patient')}}
-                    </a>
-                </div>
+{{--            <div class="box-body">--}}
+{{--                @if(Auth::user()->user_type!='pharmacist')--}}
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('patient')}}" class="btn btn-app">--}}
+{{--                        <i class="ion ion-person-add"></i> {{__('Register out-patient')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
 
 
-                <!-- ./col -->
-                <div class="col-sm-2">
-                    <a href="{{route('register_in_patient_view')}}" class="btn btn-app">
-                        <i class="fa fa-procedures"></i> {{__('Register in-Patient')}}
-                    </a>
-                </div>
-
-                @if(Auth::user()->user_type!='general')
-                <div class="col-sm-2">
-                    <a href="{{route('check_patient_view')}}" class="btn btn-app">
-                        <i class="fa fa-heartbeat"></i> {{__('Check Patient')}}
-                    </a>
-                </div>
-                @endif
-                
+{{--                <!-- ./col -->--}}
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('searchPatient')}}" class="btn btn-app">--}}
+{{--                        <i class="ion ion-stats-bars"></i>{{__('Search Patient')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
 
 
-                <!-- ./col -->
-                <div class="col-sm-2">
-                    <a href="{{route('create_channel_view')}}" class="btn btn-app">
-                        <i class="fa fa-plus-square"></i> {{__('Create Appointment')}}
-                    </a>
-                </div>
+{{--                <!-- ./col -->--}}
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('register_in_patient_view')}}" class="btn btn-app">--}}
+{{--                        <i class="fa fa-procedures"></i> {{__('Register in-Patient')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
 
-                @endif
-
-                @if(Auth::user()->user_type=='pharmacist' || Auth::user()->user_type=='admin')
-                <!-- ./col -->
-                <div class="col-sm-2">
-                    <a href="{{route('issueMedicineView')}}" class="btn btn-app">
-                        <i class="fa fa-medkit"></i> {{__('Issue Medicine')}}
-                    </a>
-                </div>
-                @endif
-            </div>
-            <div class="box-body">
-
-                <div class="col-sm-2">
-                    <a href="{{route('myattend')}}" class="btn btn-app">
-                        <i class="fa fa-user"></i> {{__('My Attendance')}}
-                    </a>
-                </div>
-
-                @if(Auth::user()->user_type=='admin')
-                <!-- ./col -->
-                <div class="col-sm-2">
-                    <a href="{{route('newuser')}}" class="btn btn-app">
-                        <i class="fa fa-user-plus"></i> {{__('Register User')}}
-                    </a>
-                </div>
+{{--                @if(Auth::user()->user_type!='general')--}}
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('check_patient_view')}}" class="btn btn-app">--}}
+{{--                        <i class="fa fa-heartbeat"></i> {{__('Check Patient')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--                @endif--}}
+{{--                --}}
 
 
-                <!-- ./col -->
-                <div class="col-sm-2">
-                    <a href="{{route('regfinger')}}" class="btn btn-app">
-                        <i class="fa fa-fingerprint"></i> {{__('Register Fingerprints')}}
-                    </a>
-                </div>
+{{--                <!-- ./col -->--}}
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('create_channel_view')}}" class="btn btn-app">--}}
+{{--                        <i class="fa fa-plus-square"></i> {{__('Create Appointment')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
 
-                <div class="col-sm-2">
-                    <a href="{{route('resetuser')}}" class="btn btn-app">
-                        <i class="fa fa-user-edit"></i> {{__('Reset Users')}}
-                    </a>
-                </div>
-                @endif
+{{--                @endif--}}
 
-                <!-- ./col -->
-                <div class="col-sm-2">
-                    <a href="{{route('profile')}}" class="btn btn-app">
-                        <i class="fa fa-home"></i> {{__('User Profile')}}
-                    </a>
-                </div>
-                @if(Auth::user()->user_type=='admin')
-                <div class="col-sm-2">
-                    <a href="{{route('createnoticeview')}}" class="btn btn-app">
-                        <i class="fa fa-commenting"></i> {{__('Notices')}}
-                    </a>
-                </div>
-                @endif
-            </div>
+{{--                @if(Auth::user()->user_type=='pharmacist' || Auth::user()->user_type=='admin')--}}
+{{--                <!-- ./col -->--}}
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('issueMedicineView')}}" class="btn btn-app">--}}
+{{--                        <i class="fa fa-medkit"></i> {{__('Issue Medicine')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--                @endif--}}
+{{--            </div>--}}
+{{--            <div class="box-body">--}}
 
-        </div>
-    </div>
-</div>
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('myattend')}}" class="btn btn-app">--}}
+{{--                        <i class="fa fa-user"></i> {{__('My Attendance')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+
+{{--                @if(Auth::user()->user_type=='admin')--}}
+{{--                <!-- ./col -->--}}
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('newuser')}}" class="btn btn-app">--}}
+{{--                        <i class="fa fa-user-plus"></i> {{__('Register User')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+
+
+{{--                <!-- ./col -->--}}
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('regfinger')}}" class="btn btn-app">--}}
+{{--                        <i class="fa fa-fingerprint"></i> {{__('Register Fingerprints')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('resetuser')}}" class="btn btn-app">--}}
+{{--                        <i class="fa fa-user-edit"></i> {{__('Reset Users')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--                @endif--}}
+
+{{--                <!-- ./col -->--}}
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('profile')}}" class="btn btn-app">--}}
+{{--                        <i class="fa fa-home"></i> {{__('User Profile')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--                @if(Auth::user()->user_type=='admin')--}}
+{{--                <div class="col-sm-2">--}}
+{{--                    <a href="{{route('createnoticeview')}}" class="btn btn-app">--}}
+{{--                        <i class="fa fa-commenting"></i> {{__('Notices')}}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--                @endif--}}
+{{--            </div>--}}
+
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 <div class="row">
     <div class="col-md-9">

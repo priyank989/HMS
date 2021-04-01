@@ -15,7 +15,7 @@ $outlet = 'Rural Ayruvedic Hospital Kesbawa';
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Shri Pardhaan Hospitals | @yield('title')</title>
+    <title>Shri Pardhaan Hospital | @yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -252,7 +252,7 @@ $outlet = 'Rural Ayruvedic Hospital Kesbawa';
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini">HMS</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg">Shri Pardhaan Hospitals</span>
+                <span class="logo-lg">Shri Pardhaan Hospital</span>
             </a>
 
             <!-- Header Navbar -->
@@ -473,61 +473,61 @@ $outlet = 'Rural Ayruvedic Hospital Kesbawa';
 
                     {{-- Wards --}}
 
-                    @if($user_type!="Pharmacist")
-                    <li class="{{Active::checkRoute('wards')}}"><a href="{{route('wards')}}"><i
-                                class="fas fa-warehouse"></i>
-                            <span>&nbsp;Wards</span></a></li>
-                    @endif
+{{--                    @if($user_type!="Pharmacist")--}}
+{{--                    <li class="{{Active::checkRoute('wards')}}"><a href="{{route('wards')}}"><i--}}
+{{--                                class="fas fa-warehouse"></i>--}}
+{{--                            <span>&nbsp;Wards</span></a></li>--}}
+{{--                    @endif--}}
 
-                    @if($user_type=="Admin")
-                    {{--add notices--}}
-                    <li class="{{Active::checkRoute('createnoticeview')}}">
-                        <a href="{{route('createnoticeview')}}">
-                            <i class="fas fa-envelope-open-text"></i>
-                            <span> Notices</span>
-                        </a>
-                    </li>
-                    @endif
+{{--                    @if($user_type=="Admin")--}}
+{{--                    --}}{{--add notices--}}
+{{--                    <li class="{{Active::checkRoute('createnoticeview')}}">--}}
+{{--                        <a href="{{route('createnoticeview')}}">--}}
+{{--                            <i class="fas fa-envelope-open-text"></i>--}}
+{{--                            <span> Notices</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    @endif--}}
 
-                    @if($user_type=="Admin"||$user_type=="Doctor")
-                    {{--statistics--}}
-                    <li class="{{Active::checkRoute(['stats','stats_old'])}}">
-                        <a href="{{route('stats')}}">
-                            <i class="fas fa-chart-line"></i></i>
-                            <span> Statistics</span>
-                        </a>
-                    </li>
-                    @endif
+{{--                    @if($user_type=="Admin"||$user_type=="Doctor")--}}
+{{--                    --}}{{--statistics--}}
+{{--                    <li class="{{Active::checkRoute(['stats','stats_old'])}}">--}}
+{{--                        <a href="{{route('stats')}}">--}}
+{{--                            <i class="fas fa-chart-line"></i></i>--}}
+{{--                            <span> Statistics</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    @endif--}}
 
 
                     {{--report generation--}}
                     <li
                         class="treeview {{Active::checkRoute(['inPatientReport','inPatientReportData','clinic_reports','mob_clinic_report','mon_stat_report','out_p_report','attendance_report'])}}">
-                        <a href="#">
-                            <i class="fas fa-sticky-note"></i>
-                            <span> Report Generation</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
+{{--                        <a href="#">--}}
+{{--                            <i class="fas fa-sticky-note"></i>--}}
+{{--                            <span> Report Generation</span>--}}
+{{--                            <span class="pull-right-container">--}}
+{{--                                <i class="fa fa-angle-left pull-right"></i>--}}
+{{--                            </span>--}}
+{{--                        </a>--}}
                         <ul class="treeview-menu">
-                            @if($user_type=="Admin"||$user_type=="Doctor")
-                            <li class="{{Active::checkRoute('clinic_reports')}}"><a
-                                    href="{{route('clinic_reports')}}"><i class="fa fa-stethoscope"
-                                        aria-hidden="true"></i> Clinic Report</a></li>
-                            @endif
+{{--                            @if($user_type=="Admin"||$user_type=="Doctor")--}}
+{{--                            <li class="{{Active::checkRoute('clinic_reports')}}"><a--}}
+{{--                                    href="{{route('clinic_reports')}}"><i class="fa fa-stethoscope"--}}
+{{--                                        aria-hidden="true"></i> Clinic Report</a></li>--}}
+{{--                            @endif--}}
 
-                            @if($user_type=="Admin"||$user_type=="Doctor")
-                            <li class="{{Active::checkRoute('mon_stat_report')}}"><a
-                                    href="{{route('mon_stat_report')}}"><i class="fa fa-sticky-note"
-                                        aria-hidden="true"></i> Monthly Statistic Report</a></li>
-                            @endif
+{{--                            @if($user_type=="Admin"||$user_type=="Doctor")--}}
+{{--                            <li class="{{Active::checkRoute('mon_stat_report')}}"><a--}}
+{{--                                    href="{{route('mon_stat_report')}}"><i class="fa fa-sticky-note"--}}
+{{--                                        aria-hidden="true"></i> Monthly Statistic Report</a></li>--}}
+{{--                            @endif--}}
 
 
-                            <li class="{{Active::checkRoute(['inPatientReport','inPatientReportData'])}}"><a
-                                    href="{{route('inPatientReport')}}"><i class="fa fa-hospital-o"
-                                        area-hidden="true"></i><span>In Patient Stats</span></a>
-                            </li>
+{{--                            <li class="{{Active::checkRoute(['inPatientReport','inPatientReportData'])}}"><a--}}
+{{--                                    href="{{route('inPatientReport')}}"><i class="fa fa-hospital-o"--}}
+{{--                                        area-hidden="true"></i><span>In Patient Stats</span></a>--}}
+{{--                            </li>--}}
 
                             <li class="{{Active::checkRoute('attendance_report')}}"><a
                                     href="{{route('attendance_report')}}"><i class="fa fa-clipboard
@@ -535,12 +535,12 @@ $outlet = 'Rural Ayruvedic Hospital Kesbawa';
                         </ul>
                     </li>
 
-                    <li>
-                        <a href="https://adminlte.io/themes/AdminLTE/index2.html" target="_blank">
-                            <i class="fas fa-folder-plus"></i>
-                            <span> Template</span>
-                        </a>
-                    </li>
+{{--                    <li>--}}
+{{--                        <a href="https://adminlte.io/themes/AdminLTE/index2.html" target="_blank">--}}
+{{--                            <i class="fas fa-folder-plus"></i>--}}
+{{--                            <span> Template</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
                 </ul>
 
@@ -576,7 +576,7 @@ $outlet = 'Rural Ayruvedic Hospital Kesbawa';
                 Version 1.0
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; {{date('Y')}} <a href="#">Shri Pardhaan Hospitals Systems</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; {{date('Y')}} <a href="#">Shri Pardhaan Hospital Systems</a>.</strong> All rights reserved.
         </footer>
 
 

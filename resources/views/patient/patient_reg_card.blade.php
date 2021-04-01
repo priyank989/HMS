@@ -35,7 +35,7 @@
                     <div class="rounded"
                         style="margin-left:0.01cm;height:1.7cm;width:13.96cm;background-color:rgb(204, 99, 14)">
                         <h4 style="padding-top: 16px;font-weight: lighter"
-                            class="text-uppercase text-center text-white">Shree Pradhaan Hospital</h4>
+                            class="text-uppercase text-center text-white">Shree Pradhan Hospital</h4>
                     </div>
                     <div style="margin-left:1px;font-size:13px" class="row mt-2">
 

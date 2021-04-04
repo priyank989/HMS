@@ -169,7 +169,7 @@
 
                     <tr>
                         <th>S.No.</th>
-                        <th>Description</th>
+                        <th>Service</th>
                         <th>Unit</th>
                         <th>Rate</th>
                         <th>Amount</th>

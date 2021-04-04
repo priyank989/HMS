@@ -26,31 +26,22 @@
                     <table>
                         <tr>
                             <td><strong>Patient Name</strong></td>
-                            <td>: <strong>Mrs. Priketa Raout <span style="padding-left: 10px;">21 Years | Female</span></strong></td>
-                        </tr>
-
-                        <tr>
-                            <td><strong>Guardian Name</strong></td>
-                            <td>: W/O xyz Kumar</td>
+                            <td>: <strong>{{$patient->name}} <span style="padding-left: 10px;">{{\Carbon\Carbon::parse($patient->bod)->age}} Years | {{$patient->sex}}</span></strong></td>
                         </tr>
 
                         <tr>
                             <td><strong>Address</strong></td>
-                            <td>: plot no. 99, area</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>: city, pincode</td>
+                            <td>: {{$patient->address}}</td>
                         </tr>
 
                         <tr>
                             <td><strong>Mobile No.</strong></td>
-                            <td>: +91 9948473495</td>
+                            <td>: {{$patient->telephone}}</td>
                         </tr>
 
                         <tr>
                             <td><strong>Consultant Name</strong></td>
-                            <td>: Dr. Swarn lata Sinha</td>
+                            <td>: {{$doctor->name}}</td>
                         </tr>
                     </table>
                 </td>
@@ -58,36 +49,30 @@
                     <table>
                         <tr>
                             <td><strong>Bill No.</strong></td>
-                            <td>: 2345</td>
+                            <td>: {{$payment->id}}</td>
 
 
                             <td><strong>Bill Date</strong></td>
-                            <td>: 01 Feb 2021</td>
+                            <td>: {{$payment->created_at}}</td>
                         </tr>
 
                         <tr>
                             <td><strong>UHID No.</strong></td>
-                            <td>: 123243</td>
+                            <td>: {{$payment->uhid}}</td>
 
                             <td><strong>Admit Date</strong></td>
-                            <td>: 26 Jan 2021 23:12</td>
+                            <td>: {{$payment->admit_date}}</td>
                         </tr>
 
                         <tr>
                             <td><strong>IPO No.</strong></td>
-                            <td>: Gen-33</td>
+                            <td>: {{$payment->ipo}}</td>
 
                             <td><strong>Dis Date & Time</strong></td>
                             <td>: 26 Jan 2021 23:12</td>
                         </tr>
 
-                        <tr>
-                            <td><strong>Room No.</strong></td>
-                            <td>: 45</td>
 
-                            <td><strong>No of Days</strong></td>
-                            <td>: 6</td>
-                        </tr>
 
                         <tr>
                             <td><strong>Room Category</strong></td>
@@ -111,72 +96,43 @@
                 <td style="border-bottom: 1px solid;"><strong>Rate</strong></td>
                 <td style="border-bottom: 1px solid;"><strong>Amount</strong></td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td style="text-align: left;">
-                    <strong>Accomodation/ Room</strong>
-                    <div>Bed Room Charges/ General Room</div>
-                </td>
-                <td>6</td>
-                <td>300.00</td>
-                <td>1800.00</td>
-            </tr>
+            @php($count=0)
+            @foreach (json_decode($payment->service_name) as $service)
+                @php($count++)
+                <tr>
+                    <td>{{$count}}
+                    </td>
+                    <td style="text-align: left;">
+                        {{$service->desc}}
+                    </td>
+                    <td>{{$service->rate}}</td>
+                    <td>{{$service->unit}}</td>
+                    <td>{{$service->amount}}</td>
+                </tr>
+            @endforeach
 
             <tr>
-                <td>1</td>
-                <td style="text-align: left;">
-                    <strong>Accomodation/ Room</strong>
-                    <div>Bed Room Charges/ General Room</div>
-                </td>
-                <td>6</td>
-                <td>300.00</td>
-                <td>1800.00</td>
-            </tr>
-
-            <tr>
-                <td>1</td>
-                <td style="text-align: left;">
-                    <strong>Accomodation/ Room</strong>
-                    <div>Bed Room Charges/ General Room</div>
-                </td>
-                <td>6</td>
-                <td>300.00</td>
-                <td>1800.00</td>
-            </tr>
-
-            <tr>
-                <td>1</td>
-                <td style="text-align: left;">
-                    <strong>Accomodation/ Room</strong>
-                    <div>Bed Room Charges/ General Room</div>
-                </td>
-                <td>6</td>
-                <td>300.00</td>
-                <td>1800.00</td>
-            </tr>
-
-            <tr>
-                <td colspan="3" rowspan="4" style="border-top:1px solid; text-align: left;">
+                <td colspan="3" rowspan="1" style="border-top:1px solid; text-align: left;">
                     <div><strong style="border-bottom: 1px solid;">Receipt Details :</strong></div>
-                    <div style="padding-top: 10px;">Dr. xyz kumar yadav</div>
-                    <div style="max-width: 80%; padding-top: 10px;">dslajf ldsajf; jasl;f jlksa jfdjdsaf lkjdsa f;lkdsajf ;jdsaf ;lks jfda;sjaf;l dsaf</div>
+                    <div style="padding-top: 10px;">Dr. {{$doctor->name}}</div>
+{{--                    <div style="max-width: 80%; padding-top: 10px;">dslajf ldsajf; jasl;f jlksa jfdjdsaf lkjdsa f;lkdsajf ;jdsaf ;lks jfda;sjaf;l dsaf</div>--}}
                 </td>
 
                 <td style="border-top:1px solid;"><strong>Gross Total :</strong></td>
-                <td style="border-top:1px solid;"><strong>43029</strong></td>
+                <td style="border-top:1px solid;"><strong>{{$total_amount}}</strong></td>
             </tr>
-            <tr>
-                <td>Discount: </td>
-                <td>6457</td>
-            </tr>
-            <tr>
-                <td><strong>Net Amount : </strong></td>
-                <td>432432</td>
-            </tr>
-            <tr>
-                <td>Payment Recd</td>
-                <td>43243</td>
-            </tr>
+{{--            <tr>--}}
+{{--                <td>Discount: </td>--}}
+{{--                <td>6457</td>--}}
+{{--            </tr>--}}
+{{--            <tr>--}}
+{{--                <td><strong>Net Amount : </strong></td>--}}
+{{--                <td>432432</td>--}}
+{{--            </tr>--}}
+{{--            <tr>--}}
+{{--                <td>Payment Recd</td>--}}
+{{--                <td>43243</td>--}}
+{{--            </tr>--}}
         </table>
 
         <table style="width: 100%;">

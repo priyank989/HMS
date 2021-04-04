@@ -20,6 +20,9 @@ class CreatePaymentsTable extends Migration
             $table->string('bill_type')->nullable()->default(null);
             $table->json('service_name')->nullable()->default(null);
             $table->string('payment_type')->nullable()->default(null);
+            $table->string('uhid')->nullable()->default(null);
+            $table->string('ipo')->nullable()->default(null);
+            $table->timestamp('admit_date')->nullable()->default(null);
             $table->string('payment_status')->nullable()->default(null);
             $table->decimal('total_amount', 8, 2)->nullable()->default(null);
             $table->decimal('paid_amount', 8, 2)->nullable()->default(null);

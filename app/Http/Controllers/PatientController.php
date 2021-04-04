@@ -744,6 +744,8 @@ public function addChannel(Request $request)
         $payment->payment_type = 'Cash';
         $payment->payment_status = 'Complete';
         $payment->service_name = json_encode($request->service);
+        $payment->uhid = Carbon::now()->timestamp;
+        $payment->admit_date = $request->admit_date;
         $payment->total_amount = $total_amount;
         $payment->paid_amount = $total_amount;
         $payment->save();
@@ -755,8 +757,8 @@ public function addChannel(Request $request)
         $doctor_patient->registration_date = Carbon::now()->addDay(21)->toDateTimeString();
         $doctor_patient->save();
         $patient = Patients::find($request->pid);
-        $doctors = User::find($request->doctor_id);
-        return view('patient.bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctors' => $doctors]);
+        $doctor = User::find($request->doctor_id);
+        return view('patient.bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount]);
 
     }
 }

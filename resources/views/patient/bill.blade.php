@@ -85,12 +85,14 @@
         </div>
 
         <div class="form-row">
-{{--            <div class="col-lg-2">--}}
-{{--                <div class="form-group">--}}
-{{--                    <label for="name">Bill No.</label>--}}
-{{--                    <input type="text" class="form-control" id="name" placeholder="Enter Bill No.">--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <label for="name">Admit Date</label>
+                    <input type="date" required  class="form-control pull-right"
+                           name="admit_date" placeholder="Admit Date">
+                </div>
+            </div>
+        </div>
 
 {{--            <div class="col-lg-2">--}}
 {{--                <div class="form-group">--}}

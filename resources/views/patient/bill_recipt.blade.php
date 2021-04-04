@@ -16,11 +16,12 @@
 @section('main_content')
     <div style="max-width: 800px; width: 100%; margin: 0 auto;">
         <table style="border-collapse: collapse;width: 100%;">
-{{--            <tr>--}}
-{{--                <td colspan="2" align="center" style="font-size: 80px;">--}}
-{{--                    <strong>Logo</strong>--}}
-{{--                </td>--}}
-{{--            </tr>--}}
+            <tr>
+                <td colspan="2" align="center" style="font-size: 30px;">
+                    <strong>Shree Pardhan Hospital</strong>
+                    <h5>NH-28, Khabra Muzaffarpur, Bihar-843146</h5>
+                </td>
+            </tr>
             <tr>
                 <td style="border: 1px solid;">
                     <table>

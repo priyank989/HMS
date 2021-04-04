@@ -183,7 +183,7 @@ class PatientController extends Controller
             $payment = new Payment();
             $payment->doctor_id = $request->doctor_id;
             $payment->patient_id = $patient->id;
-            $payment->amount = $request->amount;
+            $payment->total_amount = $request->amount;
             $payment->save();
 
             // Log Activity
@@ -452,7 +452,7 @@ class PatientController extends Controller
             'valid' => $doctor_patient->valid_till,
             'dob' => $patient->bod,
             'url' => $url,
-            'amount' => $payment->amount,
+            'amount' => $payment->total_amount,
         ];
         return view('patient.patient_reg_card', $data);
     }
@@ -723,6 +723,40 @@ public function addChannel(Request $request)
                 ->route('searchPatient')
                 ->with('unsuccess', 'Error in Updating details !!!');
         }
+
+    }
+    function bill($id){
+        $patient = Patients::find($id);
+        $doctors = User::where('user_type', 'doctor')->get();
+        return view('patient.bill', ['title' => "Edit Patient", 'patient' => $patient, 'doctors' => $doctors]);
+    }
+
+    public function billPayment(Request $request)
+    {
+        $total_amount = 0;
+        foreach ($request->service as $service){
+                $total_amount = $service['amount']+$total_amount;
+        }
+        $payment = new Payment();
+        $payment->doctor_id = $request->doctor_id;
+        $payment->patient_id = $request->pid;
+        $payment->bill_type = 'Discharge';
+        $payment->payment_type = 'Cash';
+        $payment->payment_status = 'Complete';
+        $payment->service_name = json_encode($request->service);
+        $payment->total_amount = $total_amount;
+        $payment->paid_amount = $total_amount;
+        $payment->save();
+
+        $doctor_patient = new DoctorPatient();
+        $doctor_patient->doctor_id = $request->doctor_id;
+        $doctor_patient->patient_id = $request->pid;
+        $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
+        $doctor_patient->registration_date = Carbon::now()->addDay(21)->toDateTimeString();
+        $doctor_patient->save();
+        $patient = Patients::find($request->pid);
+        $doctors = User::find($request->doctor_id);
+        return view('patient.bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctors' => $doctors]);
 
     }
 }

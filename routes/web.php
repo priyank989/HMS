@@ -50,12 +50,14 @@ Route::get('/createchannel', ['as' => 'create_channel_view', 'uses' => 'PatientC
 Route::get('/patient', ['as' => 'patient', 'uses' => 'PatientController@index'])->middleware('auth', 'staff', 'lang');
 Route::get('/patientregcard/{pid}/{did}', ['as' => 'pregcard', 'uses' => 'PatientController@regcard'])->middleware('auth', 'staff');
 Route::post('/patientregister', ['as' => 'patient_register', 'uses' => 'PatientController@registerPatient'])->middleware('auth', 'staff');
+Route::post('/billpayment', ['as' => 'bill_payment', 'uses' => 'PatientController@billPayment'])->middleware('auth', 'staff');
 Route::get('/inpatientregister', ['as' => 'register_in_patient_view', 'uses' => 'PatientController@register_in_patient_view'])->middleware('auth', 'staff', 'lang');
 Route::post('/inpatientregister2', ['as' => 'regInPatient', 'uses' => 'PatientController@regInPatientValid'])->middleware('auth', 'staff', 'lang');
 Route::post('/inpatientregister3', ['as' => 'save_inpatient', 'uses' => 'PatientController@store_inpatient'])->middleware('auth', 'staff', 'lang');
 Route::get('/dischargeInpatient', ['as' => 'discharge_inpatient', 'uses' => 'PatientController@discharge_inpatient'])->middleware('auth', 'staff', 'lang');
 Route::post('/dischargeInpatient2', ['as' => 'disInPatient', 'uses' => 'PatientController@disInPatientValid'])->middleware('auth', 'staff', 'lang');
 Route::post('/dischargeInpatient3', ['as' => 'save_disinpatient', 'uses' => 'PatientController@store_disinpatient'])->middleware('auth', 'staff', 'lang');
+Route::get('/patientbill/{pid}', ['as' => 'pbill', 'uses' => 'PatientController@bill'])->middleware('auth', 'staff');
 
 // Issue Medicine(Pharmacist Routes)
 Route::get('/issueMedicine/', ['as' => 'issueMedicineView', 'uses' => 'MedicineController@issueMedicineView'])->middleware('auth', 'pharmacist', 'lang');

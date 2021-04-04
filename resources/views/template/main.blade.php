@@ -57,6 +57,9 @@ $outlet = 'Rural Ayruvedic Hospital Kesbawa';
     <link rel="stylesheet"
         href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
+    <link rel="stylesheet" href="{{asset('dist/css/all.css')}}">
+    <link rel="stylesheet" href="{{asset('dist/css/gijgo.min.css')}}">
+    <link rel="stylesheet" href="{{asset('dist/css/main.css')}}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
@@ -588,6 +591,7 @@ $outlet = 'Rural Ayruvedic Hospital Kesbawa';
     <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.js')}}"></script>
     <script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
     <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+    <script src="{{asset('dist/js/gijgo.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <script>
         $("#preloader").fadeOut();

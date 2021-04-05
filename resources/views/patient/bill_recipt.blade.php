@@ -54,7 +54,7 @@
 
 
                             <td><strong>Bill Date</strong></td>
-                            <td>: {{$payment->created_at}}</td>
+                            <td>: {{\Carbon\Carbon::parse($payment->created_at)->format('d-M-Y')}}</td>
                         </tr>
 
                         <tr>
@@ -62,7 +62,7 @@
                             <td>: {{$payment->uhid}}</td>
 
                             <td><strong>Admit Date</strong></td>
-                            <td>: {{$payment->admit_date}}</td>
+                            <td>: {{\Carbon\Carbon::parse($payment->admit_date)->format('d-M-Y')}}</td>
                         </tr>
 
                         <tr>
@@ -100,8 +100,8 @@
 
             <tr>
                 <td colspan="3" rowspan="1" style="border-top:1px solid; text-align: left;">
-                    <div><strong style="border-bottom: 1px solid;">Receipt Details :</strong></div>
-                    <div style="padding-top: 10px;">Dr. {{$doctor->name}}</div>
+                    <div><strong style="border-bottom: 1px solid;"></strong></div>
+                    <div style="padding-top: 10px;"></div>
 {{--                    <div style="max-width: 80%; padding-top: 10px;">dslajf ldsajf; jasl;f jlksa jfdjdsaf lkjdsa f;lkdsajf ;jdsaf ;lks jfda;sjaf;l dsaf</div>--}}
                 </td>
 

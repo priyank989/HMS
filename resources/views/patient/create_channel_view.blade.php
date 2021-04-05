@@ -34,7 +34,7 @@
                 <h3 id="appt_num"></h3>
             </div>
             <a href="#" class="icon"><i class="ion ion-person-add"></i></a>
-            <a href="#" class="small-box-footer">{{__('Create Channel')}}<i class="fas fa-plus-circle"></i></a>
+            <a href="#" class="small-box-footer">{{__('Create Appointment')}}<i class="fas fa-plus-circle"></i></a>
         </div>
     </div>
 </div>
@@ -50,6 +50,8 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
+
+
             <form class="form-horizontal">
                 <div class="box-body">
                     <div class="form-group">
@@ -98,6 +100,25 @@
                             <input type="number" readonly id="patient_age" min="1" class="form-control" name="reg_page">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor')}} <span
+                                style="color:red">*</span></label>
+                        <div class="col-sm-10">
+                            <select required class="form-control" name="doctor_id" id="doctor_name">
+                                @foreach ($doctors as $doctor)
+                                    <option  value="{{$doctor->id}}">{{$doctor->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor Fees')}} <span
+                                style="color:red">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text"  class="form-control pull-right"
+                                   name="amount" placeholder="Amount" id="fees">
+                        </div>
+                    </div>
                     <div class="box-footer">
                         {{-- <input type="submit" class="btn btn-info pull-right" value="{{__('Register')}}">
                         <input type="reset" class="btn btn-default" value="{{__('Cancel')}}"> --}}
@@ -113,6 +134,11 @@
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
+        <div class="alert alert-danger alert-dismissible error-msg">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-ban"></i> Error!</h4>
+            Already Exist !
+        </div>
         <div class="box box-info" id="createchannel3">
             <div class="box-header with-border">
                 <h3 class="box-title">{{__('Enter Registration No. Or Scan The Bar Code')}}</h3>
@@ -190,12 +216,18 @@
 <!-- /.content -->
 
 <script>
+    $(".error-msg").hide();
     var patientid;
     function makeChannel(){
+        $(".error-msg").hide();
         $("#makeBtn").hide();
+        var fees = $("#fees").val();
+        var doctor_id = $("select#doctor_name option").filter(":selected").val();
         var data=new FormData;
         data.append('_token','{{csrf_token()}}');
         data.append('id',patientid);
+        data.append('fees',fees);
+        data.append('doctor_id',doctor_id);
         $.ajax({
             type: "post",
             url: "{{route('makeappoint')}}",
@@ -204,13 +236,22 @@
             cache: false,
             data:data,
             success: function (response) {
-                location.reload();
+                if(response['error']){
+                    $(".error-msg").show();
+                    $("#createchannel1").slideUp(1000);
+                    $("#createchannel2").slideUp(1000);
+                    $("#createchannel3").slideDown(1000);
+                }
+                else{
+                    location.reload();
+                }
+                 //
             }
         });
     }
 
     function createChannelFunction() {
-
+        $(".error-msg").hide();
         var x, text;
         x = document.getElementById("p_reg_num").value;
         patientid=x;

@@ -431,8 +431,9 @@ class PatientController extends Controller
     {
         $user = Auth::user();
         $appointments = DB::table('appointments')->join('patients', 'appointments.patient_id', '=', 'patients.id')->select('patients.name', 'appointments.number', 'appointments.patient_id')->whereRaw(DB::Raw('Date(appointments.created_at)=CURDATE()'))->orderBy('appointments.created_at', 'desc')->get();
+        $doctors = User::where('user_type', 'doctor')->get();
 
-        return view('patient.create_channel_view', ['title' => "Channel Appointments", 'appointments' => $appointments]);
+        return view('patient.create_channel_view', ['title' => "Channel Appointments", 'appointments' => $appointments, 'doctors' => $doctors]);
     }
 
     public function regcard($id, $did)
@@ -460,12 +461,17 @@ class PatientController extends Controller
     public function register_in_patient_view()
     {
         $user = Auth::user();
+        $patients =  DB::table('patients')
+            ->join('appointments', 'patients.id', '=', 'appointments.patient_id')
+            ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'appointments.admit as ad', 'patients.bod as bod','appointments.number as appnum','appointments.doctor_id as D1', 'patients.updated_at')
+//            ->whereRaw(DB::Raw("appointments.admit='YES' and appointments.number='$pNum'"))
+            ->get();
         $data = DB::table('wards')
                     ->select('*')
                     ->join('users', 'wards.doctor_id', '=', 'users.id')
                     ->get();
         // dd($data);
-        return view('patient.register_in_patient_view', ['title' => "Register Inpatient",'data'=>$data]);
+        return view('patient.register_in_patient_view', ['title' => "Register Inpatient",'data'=>$data, 'patients' => $patients]);
     }
 
     public function regInPatientValid(Request $request)
@@ -662,6 +668,12 @@ class PatientController extends Controller
     }
 public function addChannel(Request $request)
     {
+        $exist = Appointment::where('doctor_id', $request->doctor_id)->where('patient_id', $request->id)->whereDate('created_at', '=', Carbon::today()->toDateString())->first();
+        if($exist){
+            return response()->json([
+                'error' => 'error',
+            ]);
+        }
         $app = new Appointment;
         $num = DB::table('appointments')->select('id')->whereRaw(DB::raw("date(created_at)=CURDATE()"))->count() + 1;
         $pid = $request->id;
@@ -669,7 +681,21 @@ public function addChannel(Request $request)
 
         $app->number = $num;
         $app->patient_id = $pid;
+        $app->doctor_id = $request->doctor_id;
         $app->save();
+
+        $doctor_patient = new DoctorPatient();
+        $doctor_patient->doctor_id = $request->doctor_id;
+        $doctor_patient->patient_id = $pid;
+        $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
+        $doctor_patient->registration_date = Carbon::now()->addDay(21)->toDateTimeString();
+        $doctor_patient->save();
+
+        $payment = new Payment();
+        $payment->doctor_id = $request->doctor_id;
+        $payment->patient_id = $pid;
+        $payment->total_amount = $request->fees;
+        $payment->save();
         try {
             $app->save();
             return response()->json([
@@ -758,7 +784,8 @@ public function addChannel(Request $request)
         $doctor_patient->save();
         $patient = Patients::find($request->pid);
         $doctor = User::find($request->doctor_id);
-        return view('patient.bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount]);
+        $inpatient = inpatient::where('patient_id', $request->pid)->first();
+        return view('patient.bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
 
     }
 }

@@ -66,24 +66,10 @@
                         </tr>
 
                         <tr>
-                            <td><strong>IPO No.</strong></td>
-                            <td>: {{$payment->ipo}}</td>
-
-                            <td><strong>Dis Date & Time</strong></td>
-                            <td>: 26 Jan 2021 23:12</td>
+                            <td><strong>Dis Date</strong></td>
+                            <td>: {{isset($inpatient->discharged_date) ? $inpatient->discharged_date : ''}}</td>
                         </tr>
 
-
-
-                        <tr>
-                            <td><strong>Room Category</strong></td>
-                            <td>: General Ward</td>
-                        </tr>
-
-                        <tr>
-                            <td><strong>Patient Status</strong></td>
-                            <td>: Improved</td>
-                        </tr>
                     </table>
                 </td>
             </tr>

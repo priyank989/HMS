@@ -285,7 +285,6 @@
 </form>
 
 
-
 <div class="row mt-5 pt-5">
     <div class="col-md-1"></div>
     <div class="col-md-10">
@@ -310,6 +309,77 @@
     <div class="box-footer">
 
     </div>
+    <div class="tab-pane @if (!session('unsuccess')&&!session('success')||session('successnotice')) active @endif"
+         id="activity">
+        <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <div class="row">
+                        @if (session('successnotice'))
+                            <div class="alert alert-success">
+                                {{ session('successnotice') }}
+                            </div>
+                        @endif
+                        {{--                    <div class="col-md-10">--}}
+                        {{--                        <br>--}}
+                        {{--                        <form class="form-inline" method="POST" action="{{route('addnotice')}}">--}}
+                        {{--                            @csrf--}}
+                        {{--                            <div class="form-group mb-2">--}}
+                        {{--                                <input type="text" class="form-control" name="subject"--}}
+                        {{--                                       placeholder="enter subject">--}}
+                        {{--                            </div>--}}
+                        {{--                            <div class="form-group mx-sm-3 mb-2">--}}
+                        {{--                                <input type="text" class="form-control" name="description"--}}
+                        {{--                                       placeholder="enter description">--}}
+                        {{--                            </div>--}}
+                        {{--                            <button type="submit" class="btn btn-warning mb-2">Add</button>--}}
+                        {{--                        </form>--}}
+                        {{--                    </div>--}}
+                        <div class="col-md-2"></div>
+
+                        <div class="col-sm-12">
+                            <br>
+                            <table id="example1" class="table table-bordered table-striped dataTable"
+                                   role="grid" aria-describedby="example1_info">
+                                <thead>
+                                <tr>
+                                    <th>Registration No</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>Gender</th>
+                                    <th>Date of birth</th>
+                                    <th>Action</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($patients as $patient)
+                                    <tr>
+                                        <td>{{$patient->id}}</td>
+                                        <td>{{$patient->name}}</td>
+                                        <td>{{$patient->address}}</td>
+                                        <td>{{$patient->sex}}</td>
+                                        <td>{{\Carbon\Carbon::parse($patient->bod)->format('d/M/Y')}}</td>
+                                        <td><a href="{{route('pbill',[$patient->id])}}">Bill genrate</a></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                                <tfoot>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Gender</th>
+                                <th>Date of birth</th>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+
     <!-- /.box-footer -->
 </div>
     </div>
@@ -367,5 +437,18 @@
 
 </script>
 
+<script>
+    $(function () {
 
+        $('#example1').DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+    })
+
+</script>
 @endsection

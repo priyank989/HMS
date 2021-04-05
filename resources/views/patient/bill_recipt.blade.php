@@ -67,7 +67,7 @@
 
                         <tr>
                             <td><strong>Dis Date</strong></td>
-                            <td>: {{isset($inpatient->discharged_date) ? $inpatient->discharged_date : ''}}</td>
+                            <td>: {{isset($inpatient->discharged_date) ? \Carbon\Carbon::parse($inpatient->discharged_date)->format('d-M-Y') : ''}}</td>
                         </tr>
 
                     </table>

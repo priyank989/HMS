@@ -19,7 +19,8 @@
             <tr>
                 <td colspan="2" align="center" style="font-size: 30px;">
                     <strong>Shree Pradhan Healthcare private limited</strong>
-                    <h5>NH-28, Khabra Muzaffarpur, Bihar-843146</h5>
+                    <h5>Reg. Off-At -Khabra P.S-Sadar,Musahari, Muzaffarpur Bihar PIN-842001</h5>
+                    <h5>CIN-U85110BR2020PTCO47423</h5>
                 </td>
             </tr>
             <tr>
@@ -61,12 +62,12 @@
                             <td><strong>UHID No.</strong></td>
                             <td>: {{$payment->uhid}}</td>
 
-                            <td><strong>Admit Date</strong></td>
+                            <td><strong>DOA</strong></td>
                             <td>: {{\Carbon\Carbon::parse($payment->admit_date)->format('d-M-Y')}}</td>
                         </tr>
 
                         <tr>
-                            <td><strong>Dis Date</strong></td>
+                            <td><strong>DOD</strong></td>
                             <td>: {{isset($inpatient->discharged_date) ? \Carbon\Carbon::parse($inpatient->discharged_date)->format('d-M-Y') : ''}}</td>
                         </tr>
 
@@ -92,8 +93,8 @@
                     <td style="text-align: left;">
                         {{$service->desc}}
                     </td>
-                    <td>{{$service->rate}}</td>
                     <td>{{$service->unit}}</td>
+                    <td>{{$service->rate}}</td>
                     <td>{{$service->amount}}</td>
                 </tr>
             @endforeach

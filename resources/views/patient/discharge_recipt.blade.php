@@ -27,11 +27,12 @@ use App\Patients;
     <div class="row">
         <div class="col-md-3"></div>
         <div class="box-header with-border">
-            <h2 class="text-center text-upppercase">
+            <h1 class="text-center text-upppercase">
                 Shree Pradhan Healthcare private limited<br>
-                <small class=""><h5>NH-28, Khabra Muzaffarpur, Bihar-843146</h5></small>
+                <small class=""><h5>Reg. Off-At -Khabra P.S-Sadar,Musahari, Muzaffarpur Bihar PIN-842001</h5></small>
+                <small class=""><h5>CIN-U85110BR2020PTCO47423</h5></small>
                 <small class="small">Discharge Reciept</small>
-            </h2>
+            </h1>
             <h3></h3>
             <br>
             Patient Name: {{Patients::find($INPtableUpdate->patient_id)->name}}<br>

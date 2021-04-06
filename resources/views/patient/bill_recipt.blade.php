@@ -18,7 +18,7 @@
         <table style="border-collapse: collapse;width: 100%;">
             <tr>
                 <td colspan="2" align="center" style="font-size: 30px;">
-                    <strong>Shree Pardhan Hospital</strong>
+                    <strong>Shree Pradhan Healthcare private limited</strong>
                     <h5>NH-28, Khabra Muzaffarpur, Bihar-843146</h5>
                 </td>
             </tr>

@@ -28,7 +28,8 @@ use App\Patients;
         <div class="col-md-3"></div>
         <div class="box-header with-border">
             <h2 class="text-center text-upppercase">
-                A Unit of Shree Pradhan Hospital<br>
+                Shree Pradhan Healthcare private limited<br>
+                <small class=""><h5>NH-28, Khabra Muzaffarpur, Bihar-843146</h5></small>
                 <small class="small">Discharge Reciept</small>
             </h2>
             <h3></h3>

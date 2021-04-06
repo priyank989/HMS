@@ -2,9 +2,9 @@
 
 @section('title', $title)
 
-@section('content_title',__('Patient Registration'))
+@section('content_title',__('Patient Discharge Form'))
 
-@section('content_description',__("Register New Out Patients Here"))
+{{--@section('content_description',__("Register New Out Patients Here"))--}}
 @section('breadcrumbs')
 
     <ol class="breadcrumb">
@@ -36,14 +36,14 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="age">Age</label>
-                            <input type="text" class="form-control" name="age" value="{{\Carbon\Carbon::parse($patient->bod)->age}}" id="age" placeholder="Enter Age">
+                            <input type="text" class="form-control" readonly name="age" value="{{\Carbon\Carbon::parse($patient->bod)->age}}" id="age" placeholder="Enter Age">
                         </div>
                     </div>
 
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="age">Gender</label>
-                            <input type="text" class="form-control" name="gender" value="{{$patient->sex}}" id="age" placeholder="Enter Age">
+                            <input type="text" class="form-control" readonly name="gender" value="{{$patient->sex}}" id="age" placeholder="Enter Age">
 
                         </div>
                     </div>
@@ -51,14 +51,14 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="name">IPO No.</label>
-                            <input type="text" class="form-control" id="name" name="ipo" placeholder="Enter IPO No.">
+                            <input type="text" class="form-control" readonly id="name" name="ipo" placeholder="Enter IPO No.">
                         </div>
                     </div>
 
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="g-name">Mobile Number</label>
-                            <input type="text" class="form-control" value="{{$patient->telephone}}" id="telephone" placeholder="Enter Mobile Number">
+                            <input type="text" class="form-control" readonly value="{{$patient->telephone}}" id="telephone" placeholder="Enter Mobile Number">
                         </div>
                     </div>
 
@@ -66,6 +66,7 @@
                         <div class="form-group">
                             <label for="g-name">Consultant Name</label>
                             <select required class="form-control" name="doctor_id">
+                                <option  value="_none">Select</option>
                                 @foreach ($doctors as $doctor)
                                     <option  value="{{$doctor->id}}">{{$doctor->name}}</option>
                                 @endforeach
@@ -79,7 +80,7 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <label for="g-name">Address</label>
-                    <textarea class="form-control" id="age" value="{{$patient->address}}" placeholder="Enter Address">{{$patient->address}}</textarea>
+                    <textarea class="form-control" id="age" value="{{$patient->address}}" readonly placeholder="Enter Address">{{$patient->address}}</textarea>
                 </div>
             </div>
         </div>
@@ -92,7 +93,15 @@
                            name="admit_date" placeholder="Admit Date">
                 </div>
             </div>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <label for="name">Guardian Name</label>
+                    <input type="text" required  class="form-control pull-right"
+                           value="{{$patient->guardian}}" readonly placeholder="Guardian Name">
+                </div>
+            </div>
         </div>
+
 
 {{--            <div class="col-lg-2">--}}
 {{--                <div class="form-group">--}}
@@ -202,7 +211,7 @@
 
             <div class="col-lg-12 text-center">
                 <div class="bnt-group mt-4">
-                    <button type="button" class="btn btn-lg btn-outline-success">Preview</button>
+{{--                    <button type="button" class="btn btn-lg btn-outline-success">Preview</button>--}}
 
                     <button type="submit" class="btn btn-success btn-lg">Submit</button>
                 </div>

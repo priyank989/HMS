@@ -462,9 +462,9 @@ class PatientController extends Controller
     {
         $user = Auth::user();
         $patients =  DB::table('patients')
-            ->join('appointments', 'patients.id', '=', 'appointments.patient_id')
-            ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'appointments.admit as ad', 'patients.bod as bod','appointments.number as appnum','appointments.doctor_id as D1', 'patients.updated_at')
-//            ->whereRaw(DB::Raw("appointments.admit='YES' and appointments.number='$pNum'"))
+            ->join('inpatients', 'patients.id', '=', 'inpatients.patient_id')
+            ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'patients.bod as bod', 'patients.updated_at')
+            ->whereRaw(DB::Raw("inpatients.discharged!='YES'"))
             ->get();
         $data = DB::table('wards')
                     ->select('*')
@@ -585,7 +585,12 @@ class PatientController extends Controller
     public function discharge_inpatient()
     {
         $user = Auth::user();
-        return view('patient.discharge_inpatient_view', ['title' => "Discharge Inpatient"]);
+        $patients =  DB::table('patients')
+            ->join('inpatients', 'patients.id', '=', 'inpatients.patient_id')
+            ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'patients.bod as bod', 'patients.updated_at', 'inpatients.payment_id', 'inpatients.id as ipd','inpatients.discharged_officer')
+            ->whereRaw(DB::Raw("inpatients.discharged='YES'"))
+            ->get();
+        return view('patient.discharge_inpatient_view', ['title' => "Discharge Inpatient", 'patients' => $patients]);
     }
 
     public function disInPatientValid(Request $request)
@@ -754,7 +759,8 @@ public function addChannel(Request $request)
     function bill($id){
         $patient = Patients::find($id);
         $doctors = User::where('user_type', 'doctor')->get();
-        return view('patient.bill', ['title' => "Edit Patient", 'patient' => $patient, 'doctors' => $doctors]);
+        $inpatient = inpatient::where('patient_id', $id)->whereNull('payment_id')->first();
+        return view('patient.bill', ['title' => "Edit Patient", 'patient' => $patient, 'doctors' => $doctors, 'inpatient' => $inpatient]);
     }
 
     public function billPayment(Request $request)
@@ -784,8 +790,17 @@ public function addChannel(Request $request)
         $doctor_patient->save();
         $patient = Patients::find($request->pid);
         $doctor = User::find($request->doctor_id);
-        $inpatient = inpatient::where('patient_id', $request->pid)->first();
+        $inpatient = inpatient::where('patient_id', $request->pid)->whereNull('payment_id')->first();
+        $inpatient->payment_id = $payment->id;
+        $inpatient->save();
+
         return view('patient.bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
 
     }
+    public function billPaymentPdf(Patients $patient, User $doctor, inpatient $inpatient, Payment $payment)
+    {
+        $total_amount = $inpatient->total_amount;
+        return view('patient.bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
+    }
+
 }

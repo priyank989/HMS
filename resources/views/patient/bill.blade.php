@@ -44,6 +44,7 @@
                         <div class="form-group">
                             <label for="age">Gender</label>
                             <input type="text" class="form-control" readonly name="gender" value="{{$patient->sex}}" id="age" placeholder="Enter Age">
+{{--                            <input type="hidden" class="form-control" readonly name="gender" value="{{$inpatient->sex}}" id="age" placeholder="Enter Age">--}}
 
                         </div>
                     </div>

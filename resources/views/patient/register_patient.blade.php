@@ -62,12 +62,12 @@
                         <label for="inputEmail3" class="col-sm-2 control-label">{{__('Full Name')}} <span
                                 style="color:red">*</span></label>
                         <div class="col-sm-10">
-                            <input type="text" minlength="10" pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+                            <input type="text" minlength="3" pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
                                 required class="form-control" name="reg_pname" placeholder="Enter Patient Full Name">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">{{__('NIC Number')}}</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">{{__('Adhaar')}}</label>
                         <div class="col-sm-10">
                             <input type="text" pattern="^[1-9]{1}[0-9]{8}[V,X,v,x]|[0-9]{12}$" maxlength="12"
                                 class="form-control" name="reg_pnic" placeholder="National Identity Card Number">
@@ -114,7 +114,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="date" required max="2014-12-30" class="form-control pull-right"
+                                <input type="date" required  class="form-control pull-right"
                                     name="reg_pbd" placeholder="Birthday">
                             </div>
 
@@ -131,25 +131,25 @@
                             <input type="text" style="display:none" id="regp_photo" name="regp_photo">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor')}} <span
-                                style="color:red">*</span></label>
-                        <div class="col-sm-10">
-                            <select required class="form-control" name="doctor_id">
-                                @foreach ($doctors as $doctor)
-                                    <option  value="{{$doctor->id}}">{{$doctor->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor Fees')}} <span
-                                style="color:red">*</span></label>
-                        <div class="col-sm-10">
-                            <input type="text"  class="form-control pull-right"
-                                   name="amount" placeholder="Amount">
-                        </div>
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor')}} <span--}}
+{{--                                style="color:red">*</span></label>--}}
+{{--                        <div class="col-sm-10">--}}
+{{--                            <select required class="form-control" name="doctor_id">--}}
+{{--                                @foreach ($doctors as $doctor)--}}
+{{--                                    <option  value="{{$doctor->id}}">{{$doctor->name}}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor Fees')}} <span--}}
+{{--                                style="color:red">*</span></label>--}}
+{{--                        <div class="col-sm-10">--}}
+{{--                            <input type="text"  class="form-control pull-right"--}}
+{{--                                   name="amount" placeholder="Amount">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <div class="box-footer">
                         <input type="submit" class="btn btn-info pull-right" value="{{__('Register')}}">
                         <input type="reset" class="btn btn-default" value="{{__('Cancel')}}">

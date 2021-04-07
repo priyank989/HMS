@@ -186,9 +186,10 @@
                                                         <td>{{$patient->address}}</td>
                                                         <td>{{$patient->sex}}</td>
                                                         <td>{{\Carbon\Carbon::parse($patient->bod)->format('d/M/Y')}}</td>
-                                                        <td><a href="{{route('pbill',[$patient->id])}}">Bill genrate</a> | <a
-                                                                href="{{route('billpdf',[$patient->id, (explode(" (",$patient->discharged_officer))[0],$patient->ipd,$patient->payment_id])}}">Bill
-                                                                PDF</a></td>
+                                                        <td>
+                                                            <a href="{{$patient->payment_id ? route('billpdf',[$patient->id, (explode(" (",$patient->discharged_officer))[0],$patient->ipd,$patient->payment_id]) : route('pbill',[$patient->id])}}">{{$patient->payment_id ? 'Bill PDF' : 'Bill Genrate' }}</a>
+
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>

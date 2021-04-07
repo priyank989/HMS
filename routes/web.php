@@ -48,7 +48,7 @@ Route::get('/createchannel', ['as' => 'create_channel_view', 'uses' => 'PatientC
 
 // Patients Registration (In Patient Out Patients)
 Route::get('/patient', ['as' => 'patient', 'uses' => 'PatientController@index'])->middleware('auth', 'staff', 'lang');
-Route::get('/patientregcard/{pid}/{did}', ['as' => 'pregcard', 'uses' => 'PatientController@regcard'])->middleware('auth', 'staff');
+Route::get('/patientregcard/{pid}', ['as' => 'pregcard', 'uses' => 'PatientController@regcard'])->middleware('auth', 'staff');
 Route::post('/patientregister', ['as' => 'patient_register', 'uses' => 'PatientController@registerPatient'])->middleware('auth', 'staff');
 Route::post('/billpayment', ['as' => 'bill_payment', 'uses' => 'PatientController@billPayment'])->middleware('auth', 'staff');
 Route::get('/inpatientregister', ['as' => 'register_in_patient_view', 'uses' => 'PatientController@register_in_patient_view'])->middleware('auth', 'staff', 'lang');

@@ -85,8 +85,8 @@
             <tr>
                 <td style="border-bottom: 1px solid;"><strong>S.No.</strong></td>
                 <td style="border-bottom: 1px solid;"><strong>Description</strong></td>
-                <td style="border-bottom: 1px solid;"><strong>Unit</strong></td>
                 <td style="border-bottom: 1px solid;"><strong>Rate</strong></td>
+                <td style="border-bottom: 1px solid;"><strong>QTY.</strong></td>
                 <td style="border-bottom: 1px solid;"><strong>Amount</strong></td>
             </tr>
             @php($count=0)
@@ -98,8 +98,9 @@
                     <td style="text-align: left;">
                         {{$service->desc}}
                     </td>
-                    <td>{{$service->unit}}</td>
                     <td>{{$service->rate}}</td>
+                    <td>{{$service->unit}}</td>
+
                     <td>{{$service->amount}}</td>
                 </tr>
             @endforeach

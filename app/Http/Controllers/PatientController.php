@@ -172,19 +172,19 @@ class PatientController extends Controller
             $image = str_replace(' ', '+', $image);
             \Storage::disk('local')->put("public/" . $reg_num . ".png", base64_decode($image));
 
-            $doctor_patient = new DoctorPatient();
-            $doctor_patient->doctor_id = $request->doctor_id;
-            $doctor_patient->patient_id = $patient->id;
-            $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
-            $doctor_patient->registration_date = Carbon::now()->addDay(21)->toDateTimeString();
-            $doctor_patient->save();
+//            $doctor_patient = new DoctorPatient();
+//            $doctor_patient->doctor_id = $request->doctor_id;
+//            $doctor_patient->patient_id = $patient->id;
+//            $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
+//            $doctor_patient->registration_date = Carbon::now()->addDay(21)->toDateTimeString();
+//            $doctor_patient->save();
 
 
-            $payment = new Payment();
-            $payment->doctor_id = $request->doctor_id;
-            $payment->patient_id = $patient->id;
-            $payment->total_amount = $request->amount;
-            $payment->save();
+//            $payment = new Payment();
+//            $payment->doctor_id = $request->doctor_id;
+//            $payment->patient_id = $patient->id;
+//            $payment->total_amount = $request->amount;
+//            $payment->save();
 
             // Log Activity
             activity()->performedOn($patient)->withProperties(['Patient ID' => $reg_num])->log('Patient Registration Success');
@@ -436,24 +436,18 @@ class PatientController extends Controller
         return view('patient.create_channel_view', ['title' => "Channel Appointments", 'appointments' => $appointments, 'doctors' => $doctors]);
     }
 
-    public function regcard($id, $did)
+    public function regcard($id)
     {
         $patient = Patients::find($id);
-        $user = User::find($did);
-        $payment = Payment::where('doctor_id', $did)->where('patient_id', $id)->first();
         $url = Storage::url($id . '.png');
-        $doctor_patient = DoctorPatient::where('doctor_id', $did)->where('patient_id', $id)->first();
         $data = [
             'name' => $patient->name,
-            'doctor_name' => $user->name,
             'address' => $patient->address,
             'sex' => $patient->sex,
             'id' => $patient->id,
             'reg' => explode(" ", $patient->created_at)[0],
-            'valid' => $doctor_patient->valid_till,
             'dob' => $patient->bod,
             'url' => $url,
-            'amount' => $payment->total_amount,
         ];
         return view('patient.patient_reg_card', $data);
     }

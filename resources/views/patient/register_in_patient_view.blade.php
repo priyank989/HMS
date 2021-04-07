@@ -366,10 +366,12 @@
                                 @endforeach
                                 </tbody>
                                 <tfoot>
+                                <th>Registration No</th>
                                 <th>Name</th>
                                 <th>Address</th>
                                 <th>Gender</th>
                                 <th>Date of birth</th>
+                                <th>Action</th>
                                 </tfoot>
                             </table>
                         </div>

@@ -301,11 +301,11 @@
                         $("#valDate").html(patient.valid_till);
                         $("#appt_num").text(patient.appNum);
                         if(patient.validity == 0){
-                            $("#app_text").html('Followup Appointment');
+                            $("#app_text").html('Create Appointment');
                         }
                         else{
                             $("#fees").val(0);
-                            $("#app_text").html('Create Appointment');
+                            $("#app_text").html('Followup Appointment');
                         }
                         if(patient.doctor_id){
                             $("#doctor_name").val(patient.doctor_id);

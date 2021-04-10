@@ -369,7 +369,7 @@
                                 <th>Address</th>
                                 <th>Gender</th>
                                 <th>Date of birth</th>
-                                <th>Action</th>
+{{--                                <th>Action</th>--}}
                                 </tfoot>
                             </table>
                         </div>

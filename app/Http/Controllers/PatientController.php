@@ -36,18 +36,18 @@ class PatientController extends Controller
     public function inPatientReport()
     {
 
-        return view('patient.inpatient.inpatients', ["date"=>null,"title" => "Inpatient Details", "data_count" => 0]);
+        return view('patient.inpatient.inpatients', ["date" => null, "title" => "Inpatient Details", "data_count" => 0]);
 
     }
 
     public function inPatientReportData(Request $request)
     {
-        $data=DB::table('inpatients')->whereDate('created_at', '=', $request->date)->get();
-        if($data->count()>0){
-            return view('patient.inpatient.inpatients', ["title" => "Inpatient Details","date"=>$request->date,"data_count"=>$data->count(), "data" => $data]);
+        $data = DB::table('inpatients')->whereDate('created_at', '=', $request->date)->get();
+        if ($data->count() > 0) {
+            return view('patient.inpatient.inpatients', ["title" => "Inpatient Details", "date" => $request->date, "data_count" => $data->count(), "data" => $data]);
 
-        }else{
-            return redirect(route("inPatientReport"))->with('fail',"No Results Found");
+        } else {
+            return redirect(route("inPatientReport"))->with('fail', "No Results Found");
         }
 
     }
@@ -89,7 +89,8 @@ class PatientController extends Controller
     {
         if ($action == "delete") {
             Patients::find($id)->delete();
-        }if ($action == 'restore') {
+        }
+        if ($action == 'restore') {
             Patients::withTrashed()->find($id)->restore();
         }
         return redirect()->route('patientProfile', $id);
@@ -143,7 +144,7 @@ class PatientController extends Controller
     {
         try {
             $patient = new Patients;
-            $today_regs = (int) Patients::whereDate('created_at', date("Y-m-d"))->count();
+            $today_regs = (int)Patients::whereDate('created_at', date("Y-m-d"))->count();
 
             $number = $today_regs + 1;
             $year = date('Y') % 100;
@@ -223,19 +224,19 @@ class PatientController extends Controller
     public function validateAppNum(Request $request)
     {
         $num = $request->number;
-        $numlength = strlen((string) $num);
+        $numlength = strlen((string)$num);
         if ($numlength < 5) { // this means the appointment number has entered
             $rec = DB::table('appointments')
-            ->join('patients', 'appointments.patient_id', '=', 'patients.id')
-            ->select('patients.name as name', 'appointments.number as num', 'appointments.patient_id as pnum')
-            ->whereRaw(DB::Raw("Date(appointments.created_at)=CURDATE() and appointments.number='$num'"))->first();
+                ->join('patients', 'appointments.patient_id', '=', 'patients.id')
+                ->select('patients.name as name', 'appointments.number as num', 'appointments.patient_id as pnum')
+                ->whereRaw(DB::Raw("Date(appointments.created_at)=CURDATE() and appointments.number='$num'"))->first();
             if ($rec) {
                 return response()->json([
                     "exist" => true,
                     "name" => $rec->name,
                     "appNum" => $rec->num,
                     "pNum" => $rec->pnum,
-                    "finger"=>Auth::user()->fingerprint ,
+                    "finger" => Auth::user()->fingerprint,
                 ]);
             } else {
                 return response()->json([
@@ -447,7 +448,7 @@ class PatientController extends Controller
     public function create_channel_view()
     {
         $user = Auth::user();
-        $appointments = DB::table('appointments')->join('patients', 'appointments.patient_id', '=', 'patients.id')->join('doctor_patients', 'patients.id', '=', 'doctor_patients.patient_id')->join('users', 'users.id', '=', 'doctor_patients.doctor_id')->select('users.id as doctor_id','users.name as uname', 'patients.name', 'appointments.number', 'appointments.patient_id', 'appointments.payment_id')->whereRaw(DB::Raw('Date(appointments.created_at)=CURDATE()'))->orderBy('appointments.created_at', 'desc')->get();
+        $appointments = DB::table('appointments')->join('patients', 'appointments.patient_id', '=', 'patients.id')->join('doctor_patients', 'patients.id', '=', 'doctor_patients.patient_id')->join('users', 'users.id', '=', 'doctor_patients.doctor_id')->select('users.id as doctor_id', 'users.name as uname', 'patients.name', 'appointments.number', 'appointments.patient_id', 'appointments.payment_id')->whereRaw(DB::Raw('Date(appointments.created_at)=CURDATE()'))->orderBy('appointments.created_at', 'desc')->get();
         $doctors = User::where('user_type', 'doctor')->get();
 
         return view('patient.create_channel_view', ['title' => "Channel Appointments", 'appointments' => $appointments, 'doctors' => $doctors]);
@@ -472,79 +473,89 @@ class PatientController extends Controller
     public function register_in_patient_view()
     {
         $user = Auth::user();
-        $patients =  DB::table('patients')
+        $patients = DB::table('patients')
             ->join('inpatients', 'patients.id', '=', 'inpatients.patient_id')
             ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'patients.bod as bod', 'patients.updated_at')
             ->whereRaw(DB::Raw("inpatients.discharged!='YES'"))
             ->get();
         $data = DB::table('wards')
-                    ->select('*')
-                    ->join('users', 'wards.doctor_id', '=', 'users.id')
-                    ->get();
+            ->select('*')
+            ->join('users', 'wards.doctor_id', '=', 'users.id')
+            ->get();
         // dd($data);
-        return view('patient.register_in_patient_view', ['title' => "Register Inpatient",'data'=>$data, 'patients' => $patients]);
+        return view('patient.register_in_patient_view', ['title' => "Register Inpatient", 'data' => $data, 'patients' => $patients]);
     }
 
     public function regInPatientValid(Request $request)
     {
         $pNum = $request->pNum;
-        $pNumLen = strlen((string) $pNum);
-        if($pNumLen < 5) //if appointemnt number have been given
+        $pNumLen = strlen((string)$pNum);
+
+        if ($pNumLen < 5) //if appointemnt number have been given
         {
             $patient = DB::table('patients')
-            ->join('appointments', 'patients.id', '=', 'appointments.patient_id')
-            ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'appointments.admit as ad', 'patients.bod as bod','appointments.number as appnum','appointments.doctor_id as D1', 'patients.updated_at')
-            ->whereRaw(DB::Raw("appointments.admit='YES' and appointments.number='$pNum'"))
-            ->first();
+                ->join('appointments', 'patients.id', '=', 'appointments.patient_id')
+                ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'appointments.admit as ad', 'patients.bod as bod', 'appointments.number as appnum', 'appointments.doctor_id as D1', 'patients.updated_at')
+                ->whereRaw(DB::Raw("appointments.admit='YES' and appointments.number='$pNum'"))
+                ->first();
+        } else {
+            $patient = DB::table('patients')
+                ->join('appointments', 'patients.id', '=', 'appointments.patient_id')
+                ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'appointments.admit as ad', 'patients.bod as bod', 'appointments.number as appnum', 'appointments.doctor_id as D1')
+                ->whereRaw(DB::Raw("appointments.admit='YES' and patients.id='$pNum'"))
+                ->first();
+        }
+        if ($patient) {
+            $patients_exist = DB::table('patients')
+                ->join('inpatients', 'patients.id', '=', 'inpatients.patient_id')
+                ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'patients.bod as bod', 'patients.updated_at')
+                ->whereRaw(DB::Raw("patients.id='$patient->id'"))
+                ->first();
 
-            if ($patient) {
-
-            return response()->json([
-                'exist' => true,
-                'name' => $patient->name,
-                'sex' => $patient->sex,
-                'address' => $patient->address,
-                'occupation' => $patient->occ,
-                'telephone' => $patient->tel,
-                'nic' => $patient->nic,
-                'age' => Patients::find($patient->id)->getAge(),
-                'id' => $patient->id,
-            ]);
+            $patients_discharged = DB::table('patients')
+                ->join('inpatients', 'patients.id', '=', 'inpatients.patient_id')
+                ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'patients.bod as bod', 'patients.updated_at')
+                ->whereRaw(DB::Raw("inpatients.discharged='YES'"))
+                ->whereRaw(DB::Raw("patients.id='$patient->id'"))
+                ->first();
+            if ($patients_exist) {
+                if ($patients_discharged) {
+                    return response()->json([
+                        'exist' => true,
+                        'name' => $patient->name,
+                        'sex' => $patient->sex,
+                        'address' => $patient->address,
+                        'occupation' => $patient->occ,
+                        'telephone' => $patient->tel,
+                        'nic' => $patient->nic,
+                        'age' => Patients::find($patient->id)->getAge(),
+                        'id' => $patient->id,
+                    ]);
+                } else {
+                    return response()->json([
+                        'exist' => false,
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'exist' => true,
+                    'name' => $patient->name,
+                    'sex' => $patient->sex,
+                    'address' => $patient->address,
+                    'occupation' => $patient->occ,
+                    'telephone' => $patient->tel,
+                    'nic' => $patient->nic,
+                    'age' => Patients::find($patient->id)->getAge(),
+                    'id' => $patient->id,
+                ]);
+            }
         } else { //if patient registration number have been given
             return response()->json([
-                'exist' => false,
+                'exist' => 'sss',
             ]);
         }
-        }
 
-        else
-        {
-
-        $patient = DB::table('patients')
-                        ->join('appointments', 'patients.id', '=', 'appointments.patient_id')
-                        ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'appointments.admit as ad', 'patients.bod as bod','appointments.number as appnum','appointments.doctor_id as D1')
-                        ->whereRaw(DB::Raw("appointments.admit='YES' and patients.id='$pNum'"))
-                        ->first();
-        if ($patient) {
-
-            return response()->json([
-                'exist' => true,
-                'name' => $patient->name,
-                'sex' => $patient->sex,
-                'address' => $patient->address,
-                'occupation' => $patient->occ,
-                'telephone' => $patient->tel,
-                'nic' => $patient->nic,
-                'age' => Patients::find($patient->id)->getAge(),
-                'id' => $patient->id,
-            ]);
-        } else {
-            return response()->json([
-                'exist' => false,
-            ]);
-        }
     }
-}
 
     public function store_inpatient(Request $request)
     {
@@ -576,7 +587,7 @@ class PatientController extends Controller
 
         // decrement bed count by 1
         $getFB = Ward::where('ward_no', $request->reg_ipwardno)->first();
-        $newFB = $getFB->free_beds-=1;
+        $newFB = $getFB->free_beds -= 1;
         Ward::where('ward_no', $request->reg_ipwardno)->update(['free_beds' => $newFB]);
 
 
@@ -586,8 +597,8 @@ class PatientController extends Controller
     public function get_ward_list()
     {
         $wardList = $this->wardList;
-        $data=DB::table('wards')->join('users','wards.doctor_id','=','users.id')->select('*')->get();
-         return view('register_in_patient_view', ['data'=>$data]);
+        $data = DB::table('wards')->join('users', 'wards.doctor_id', '=', 'users.id')->select('*')->get();
+        return view('register_in_patient_view', ['data' => $data]);
         // $wards = Ward::all();
         // dd($wardss);
         // return view('register_in_patient_view', compact(['wards']));
@@ -596,10 +607,10 @@ class PatientController extends Controller
     public function discharge_inpatient()
     {
         $user = Auth::user();
-        $patients =  DB::table('patients')
+        $patients = DB::table('patients')
             ->join('inpatients', 'patients.id', '=', 'inpatients.patient_id')
             ->join('doctor_patients', 'doctor_patients.patient_id', '=', 'patients.id')
-            ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'patients.bod as bod', 'patients.updated_at', 'inpatients.payment_id', 'inpatients.id as ipd','inpatients.discharged_officer', 'doctor_patients.doctor_id')
+            ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'patients.bod as bod', 'patients.updated_at', 'inpatients.payment_id', 'inpatients.id as ipd', 'inpatients.discharged_officer', 'doctor_patients.doctor_id')
             ->whereRaw(DB::Raw("inpatients.discharged='YES'"))
             ->get();
         return view('patient.discharge_inpatient_view', ['title' => "Discharge Inpatient", 'patients' => $patients]);
@@ -609,10 +620,10 @@ class PatientController extends Controller
     {
         $pNum = $request->pNum;
         $inpatient = DB::table('patients')
-                        ->join('inpatients', 'patients.id', '=', 'inpatients.patient_id')
-                        ->select('inpatients.patient_id as id', 'patients.name as name', 'patients.address as address', 'patients.telephone as tel', 'inpatients.discharged as dis')
-                        ->whereRaw(DB::Raw("inpatients.patient_id='$pNum' and inpatients.discharged='NO'"))
-                        ->first();
+            ->join('inpatients', 'patients.id', '=', 'inpatients.patient_id')
+            ->select('inpatients.patient_id as id', 'patients.name as name', 'patients.address as address', 'patients.telephone as tel', 'inpatients.discharged as dis')
+            ->whereRaw(DB::Raw("inpatients.patient_id='$pNum' and inpatients.discharged='NO'"))
+            ->first();
 
         if ($inpatient) {
 
@@ -647,10 +658,10 @@ class PatientController extends Controller
         // increment bed count by 1
         $wardNo = $INPtableUpdate->ward_id;
         $getFB = Ward::where('ward_no', $wardNo)->first();
-        $newFB = $getFB->free_beds+=1;
+        $newFB = $getFB->free_beds += 1;
         Ward::where('ward_no', $wardNo)->update(['free_beds' => $newFB]);
 
-        return view('patient.discharge_recipt',compact('INPtableUpdate'))->with('regpsuccess', "Inpatient Successfully Discharged");;
+        return view('patient.discharge_recipt', compact('INPtableUpdate'))->with('regpsuccess', "Inpatient Successfully Discharged");;
         // }
         // catch(\Throwable $th){
         //     return redirect()->back()->with('error',"Unkown Error Occured");
@@ -666,9 +677,9 @@ class PatientController extends Controller
         if ($patient) {
 
             $num = DB::table('appointments')->select('id')->whereRaw(DB::raw("date(created_at)=CURDATE()"))->count() + 1;
-            $day_left = Carbon::parse(Carbon::now())->diffInDays( $doc_pat->valid_till, false );
+            $day_left = Carbon::parse(Carbon::now())->diffInDays($doc_pat->valid_till, false);
             $validity = 1;
-            if($day_left <= 0){
+            if ($day_left < 0) {
                 $validity = 0;
             }
             return response()->json([
@@ -694,11 +705,12 @@ class PatientController extends Controller
             ]);
         }
     }
-public function addChannel(Request $request)
+
+    public function addChannel(Request $request)
     {
         $user = Auth::user();
         $exist = Appointment::where('doctor_id', $request->doctor_id)->where('patient_id', $request->id)->whereDate('created_at', '=', Carbon::today()->toDateString())->first();
-        if($exist){
+        if ($exist) {
             return response()->json([
                 'error' => 'error',
             ]);
@@ -712,7 +724,7 @@ public function addChannel(Request $request)
         $payment->total_amount = $request->fees;
         $payment->service_name = json_encode(array('doctor fess' => $request->fees));
         $payment->bill_type = 'appointment';
-        if($request->fees == 0){
+        if ($request->fees == 0) {
             $payment->bill_type = 'followup';
         }
         $payment->save();
@@ -727,7 +739,7 @@ public function addChannel(Request $request)
         $app->payment_id = $payment->id;
         $app->doctor_id = $request->doctor_id;
         $app->save();
-        if($request->fees !=0){
+        if ($request->fees != 0) {
             $doctor_patient = inpatient::where('patient_id', $request->pid)->first();
             $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
             $doctor_patient->valid_till = Carbon::now()->addDay(20)->toDateTimeString();
@@ -796,7 +808,9 @@ public function addChannel(Request $request)
         }
 
     }
-    function bill($id){
+
+    function bill($id)
+    {
         $patient = Patients::find($id);
         $doctors = User::where('user_type', 'doctor')->get();
         $inpatient = inpatient::where('patient_id', $id)->whereNull('payment_id')->first();
@@ -806,8 +820,8 @@ public function addChannel(Request $request)
     public function billPayment(Request $request)
     {
         $total_amount = 0;
-        foreach ($request->service as $service){
-                $total_amount = $service['amount']+$total_amount;
+        foreach ($request->service as $service) {
+            $total_amount = $service['amount'] + $total_amount;
         }
         $payment = new Payment();
         $user = Auth::user();
@@ -838,7 +852,7 @@ public function addChannel(Request $request)
         $inpatient->payment_id = $payment->id;
         $inpatient->save();
 
-        return view('patient.bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
+        return view('patient.bill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
 
     }
 
@@ -852,8 +866,9 @@ public function addChannel(Request $request)
     public function billPaymentPdf(Patients $patient, User $doctor, inpatient $inpatient, Payment $payment)
     {
         $total_amount = $payment->total_amount;
-        return view('patient.bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
+        return view('patient.bill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
     }
+
     /**
      * @param Patients $patient
      * @param User $doctor
@@ -865,6 +880,6 @@ public function addChannel(Request $request)
     {
         $total_amount = $payment->total_amount;
         $doc_pat = DoctorPatient::where('patient_id', $patient->id)->first();
-        return view('patient.reg_bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'doc_pat' => $doc_pat]);
+        return view('patient.reg_bill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'doc_pat' => $doc_pat]);
     }
 }

@@ -25,7 +25,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                
+
 
                 @if ($patient)
                 <form class="form-horizontal" action="{{route('updatepatientdetails')}}" method="POST">

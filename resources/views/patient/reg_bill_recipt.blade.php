@@ -40,10 +40,7 @@
                             <td>: <strong>{{$patient->name}} <span style="padding-left: 10px;">{{\Carbon\Carbon::parse($patient->bod)->age}} Years | {{$patient->sex}}</span></strong></td>
                         </tr>
 
-                        <tr>
-                            <td><strong>Guardian Name</strong></td>
-                            <td>: <strong>{{$patient->guardian}} </strong></td>
-                        </tr>
+
 
                         <tr>
                             <td><strong>Address</strong></td>

@@ -34,7 +34,7 @@
                 <h3 id="appt_num"></h3>
             </div>
             <a href="#" class="icon"><i class="ion ion-person-add"></i></a>
-            <a href="#" class="small-box-footer">{{__('Create Appointment')}}<i class="fas fa-plus-circle"></i></a>
+            <a href="#" class="small-box-footer" id="app_text">Followup Appointment<i class="fas fa-plus-circle"></i></a>
         </div>
     </div>
 </div>
@@ -105,7 +105,8 @@
                                 style="color:red">*</span></label>
                         <div class="col-sm-10">
                             <select required class="form-control" name="doctor_id" id="doctor_name">
-                                @foreach ($doctors as $doctor)
+                                <option  value="_none">Select</option>
+                            @foreach ($doctors as $doctor)
                                     <option  value="{{$doctor->id}}">{{$doctor->name}}</option>
                                 @endforeach
                             </select>
@@ -117,6 +118,16 @@
                         <div class="col-sm-10">
                             <input type="text"  class="form-control pull-right"
                                    name="amount" placeholder="Amount" id="fees">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 ">{{__('Valid From')}}</label>
+                        <div class="col-sm-2 reg-date" id="regDate">
+                            dgfdg
+                        </div>
+                        <label for="inputEmail3" class="col-sm-2">{{__('Valid Till')}}</label>
+                        <div class="col-sm-2 val-date" id="valDate">
+                            fdef
                         </div>
                     </div>
                     <div class="box-footer">
@@ -186,6 +197,8 @@
                             <th>{{__('Registration No.')}}</th>
                             <th>{{__('Appointment No.')}}</th>
                             <th>{{__('Name')}}</th>
+                            <th>{{__('Doctor Name')}}</th>
+                            <th>{{__('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -194,6 +207,8 @@
                             <td>{{$app->patient_id}}</td>
                             <td>{{$app->number}}</td>
                             <td>{{$app->name}}</td>
+                            <td>{{$app->uname}}</td>
+                            <td><a href="{{route('regbillpdf',[$app->patient_id, $app->doctor_id, $app->payment_id])}}">Bill genrate</a></td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -282,8 +297,19 @@
                         $("#patient_nic").val(patient.nic);
                         $("#patient_address").val(patient.address);
                         $("#patient_occupation").val(patient.occupation);
+                        $("#regDate").html(patient.valid_from);
+                        $("#valDate").html(patient.valid_till);
                         $("#appt_num").text(patient.appNum);
-
+                        if(patient.validity == 0){
+                            $("#app_text").html('Followup Appointment');
+                        }
+                        else{
+                            $("#fees").val(0);
+                            $("#app_text").html('Create Appointment');
+                        }
+                        if(patient.doctor_id){
+                            $("#doctor_name").val(patient.doctor_id);
+                        }
                         $("#createchannel1").slideDown(1000);
                         $("#createchannel2").slideDown(1000);
                         $("#createchannel3").slideUp(1000);

@@ -17,8 +17,10 @@ use Carbon\Carbon;
 use DB;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Comment\Doc;
 use stdClass;
 
 class PatientController extends Controller
@@ -172,19 +174,34 @@ class PatientController extends Controller
             $image = str_replace(' ', '+', $image);
             \Storage::disk('local')->put("public/" . $reg_num . ".png", base64_decode($image));
 
-//            $doctor_patient = new DoctorPatient();
-//            $doctor_patient->doctor_id = $request->doctor_id;
-//            $doctor_patient->patient_id = $patient->id;
-//            $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
-//            $doctor_patient->registration_date = Carbon::now()->addDay(21)->toDateTimeString();
-//            $doctor_patient->save();
+            $doctor_patient = new DoctorPatient();
+            $doctor_patient->doctor_id = $request->doctor_id;
+            $doctor_patient->patient_id = $patient->id;
+            $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
+            $doctor_patient->valid_till = Carbon::now()->addDay(20)->toDateTimeString();
+            $doctor_patient->save();
 
 
-//            $payment = new Payment();
-//            $payment->doctor_id = $request->doctor_id;
-//            $payment->patient_id = $patient->id;
-//            $payment->total_amount = $request->amount;
-//            $payment->save();
+            $payment = new Payment();
+            $user = Auth::user();
+            $payment->updated_by = $user->id;
+            $payment->created_by = $user->id;
+            $payment->doctor_id = $request->doctor_id;
+            $payment->patient_id = $patient->id;
+            $payment->service_name = json_encode(array("doctor fess" => $request->amount, "registartion fess" => 50));
+            $payment->bill_type = 'registration';
+            $payment->total_amount = $request->amount + 50;
+            $payment->save();
+            $app = new Appointment;
+            $num = DB::table('appointments')->select('id')->whereRaw(DB::raw("date(created_at)=CURDATE()"))->count() + 1;
+            $pid = $patient->id;
+            $patient = Patients::find($patient->id);
+
+            $app->number = $num;
+            $app->payment_id = $payment->id;
+            $app->patient_id = $patient->id;
+            $app->doctor_id = $request->doctor_id;
+            $app->save();
 
             // Log Activity
             activity()->performedOn($patient)->withProperties(['Patient ID' => $reg_num])->log('Patient Registration Success');
@@ -430,7 +447,7 @@ class PatientController extends Controller
     public function create_channel_view()
     {
         $user = Auth::user();
-        $appointments = DB::table('appointments')->join('patients', 'appointments.patient_id', '=', 'patients.id')->select('patients.name', 'appointments.number', 'appointments.patient_id')->whereRaw(DB::Raw('Date(appointments.created_at)=CURDATE()'))->orderBy('appointments.created_at', 'desc')->get();
+        $appointments = DB::table('appointments')->join('patients', 'appointments.patient_id', '=', 'patients.id')->join('doctor_patients', 'patients.id', '=', 'doctor_patients.patient_id')->join('users', 'users.id', '=', 'doctor_patients.doctor_id')->select('users.id as doctor_id','users.name as uname', 'patients.name', 'appointments.number', 'appointments.patient_id', 'appointments.payment_id')->whereRaw(DB::Raw('Date(appointments.created_at)=CURDATE()'))->orderBy('appointments.created_at', 'desc')->get();
         $doctors = User::where('user_type', 'doctor')->get();
 
         return view('patient.create_channel_view', ['title' => "Channel Appointments", 'appointments' => $appointments, 'doctors' => $doctors]);
@@ -643,10 +660,16 @@ class PatientController extends Controller
     {
         $regNum = $request->regNum;
         $patient = Patients::find($regNum);
+
+        $doc_pat = DoctorPatient::where('patient_id', $regNum)->first();
         if ($patient) {
 
             $num = DB::table('appointments')->select('id')->whereRaw(DB::raw("date(created_at)=CURDATE()"))->count() + 1;
-
+            $day_left = Carbon::parse(Carbon::now())->diffInDays( $doc_pat->valid_till, false );
+            $validity = 1;
+            if($day_left <= 0){
+                $validity = 0;
+            }
             return response()->json([
                 'exist' => true,
                 'name' => $patient->name,
@@ -657,7 +680,12 @@ class PatientController extends Controller
                 'nic' => $patient->nic,
                 'age' => $patient->getAge(),
                 'id' => $patient->id,
+                'doctor_id' => isset($doc_pat) ? $doc_pat->doctor_id : '',
                 'appNum' => $num,
+                'valid_from' => $doc_pat->registration_date,
+                'valid_till' => $doc_pat->valid_till,
+                'day' => $day_left,
+                'validity' => $validity
             ]);
         } else {
             return response()->json([
@@ -667,19 +695,35 @@ class PatientController extends Controller
     }
 public function addChannel(Request $request)
     {
+        $user = Auth::user();
         $exist = Appointment::where('doctor_id', $request->doctor_id)->where('patient_id', $request->id)->whereDate('created_at', '=', Carbon::today()->toDateString())->first();
         if($exist){
             return response()->json([
                 'error' => 'error',
             ]);
         }
+        $pid = $request->id;
+        $payment = new Payment();
+        $payment->doctor_id = $request->doctor_id;
+        $payment->patient_id = $pid;
+        $payment->updated_by = $user->id;
+        $payment->created_by = $user->id;
+        $payment->total_amount = $request->fees;
+        $payment->service_name = json_encode(array('doctor fess' => $request->fees));
+        $payment->bill_type = 'appointment';
+        if($request->fees == 0){
+            $payment->bill_type = 'followup';
+        }
+        $payment->save();
+
         $app = new Appointment;
         $num = DB::table('appointments')->select('id')->whereRaw(DB::raw("date(created_at)=CURDATE()"))->count() + 1;
-        $pid = $request->id;
+
         $patient = Patients::find($pid);
 
         $app->number = $num;
         $app->patient_id = $pid;
+        $app->payment_id = $payment->id;
         $app->doctor_id = $request->doctor_id;
         $app->save();
 
@@ -687,14 +731,10 @@ public function addChannel(Request $request)
         $doctor_patient->doctor_id = $request->doctor_id;
         $doctor_patient->patient_id = $pid;
         $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
-        $doctor_patient->registration_date = Carbon::now()->addDay(21)->toDateTimeString();
+        $doctor_patient->registration_date = Carbon::now()->addDay(20)->toDateTimeString();
         $doctor_patient->save();
 
-        $payment = new Payment();
-        $payment->doctor_id = $request->doctor_id;
-        $payment->patient_id = $pid;
-        $payment->total_amount = $request->fees;
-        $payment->save();
+
         try {
             $app->save();
             return response()->json([
@@ -764,6 +804,9 @@ public function addChannel(Request $request)
                 $total_amount = $service['amount']+$total_amount;
         }
         $payment = new Payment();
+        $user = Auth::user();
+        $payment->updated_by = $user->id;
+        $payment->created_by = $user->id;
         $payment->doctor_id = $request->doctor_id;
         $payment->patient_id = $request->pid;
         $payment->bill_type = 'Discharge';
@@ -780,7 +823,7 @@ public function addChannel(Request $request)
         $doctor_patient->doctor_id = $request->doctor_id;
         $doctor_patient->patient_id = $request->pid;
         $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
-        $doctor_patient->registration_date = Carbon::now()->addDay(21)->toDateTimeString();
+        $doctor_patient->registration_date = Carbon::now()->addDay(20)->toDateTimeString();
         $doctor_patient->save();
         $patient = Patients::find($request->pid);
         $doctor = User::find($request->doctor_id);
@@ -791,10 +834,30 @@ public function addChannel(Request $request)
         return view('patient.bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
 
     }
+
+    /**
+     * @param Patients $patient
+     * @param User $doctor
+     * @param inpatient $inpatient
+     * @param Payment $payment
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function billPaymentPdf(Patients $patient, User $doctor, inpatient $inpatient, Payment $payment)
     {
         $total_amount = $payment->total_amount;
         return view('patient.bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
     }
-
+    /**
+     * @param Patients $patient
+     * @param User $doctor
+     * @param inpatient $inpatient
+     * @param Payment $payment
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function regbillPaymentPdf(Patients $patient, User $doctor, Payment $payment)
+    {
+        $total_amount = $payment->total_amount;
+        $doc_pat = DoctorPatient::where('patient_id', $patient->id)->first();
+        return view('patient.reg_bill_recipt', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'doc_pat' => $doc_pat]);
+    }
 }

@@ -31,9 +31,9 @@
         <div class="mx-auto row">
             <div class="col-3"></div>
             <div style="margin-top:30vh;" class="col-6">
-                <div style="height:8cm;width:14cm" class="border border-dark rounded bg-light">
+                <div style="height:6cm;width:11cm" class="border border-dark rounded bg-light">
                     <div class="rounded"
-                        style="margin-left:0.01cm;height:1.7cm;width:13.96cm;background-color:rgb(204, 99, 14)">
+                        style="margin-left:0.01cm;height:1.7cm;width:10.96cm;background-color:rgb(204, 99, 14)">
                         <h4 style="padding-top: 16px;font-weight: lighter"
                             class="text-uppercase text-center text-white">Shree Pradhan Hospital</h4>
                     </div>
@@ -50,7 +50,7 @@
 {{--                            <span>Registration Fess<br></span>--}}
 {{--                            <span>Total<br></span>--}}
                             <span>Registration Date<br></span>
-                            <span>Valid Till<br></span>
+{{--                            <span>Valid Till<br></span>--}}
                         </div>
                         <div class="col-1 m-0 p-0 text-left">
                             <span>: <br></span>
@@ -58,7 +58,7 @@
 {{--                            <span>: <br></span>--}}
 {{--                            <span>: <br></span>--}}
 {{--                            <span>: <br></span>--}}
-                            <span>: <br></span>
+{{--                            <span>: <br></span>--}}
                             <span>: <br></span>
                             <span>: <br></span>
                             <span>: <br></span>
@@ -78,7 +78,7 @@
 {{--                                    <span>50.00<br></span>--}}
 {{--                                    <span>{{$amount + 50}}<br></span>--}}
                                     <span>{{\Carbon\Carbon::parse($reg)->format('d-M-Y')}}<br></span>
-                                    <span>{{\Carbon\Carbon::parse($reg)->addDay(20)->format('d-M-Y')}}</span>
+{{--                                    <span>{{\Carbon\Carbon::parse($reg)->addDay(20)->format('d-M-Y')}}</span>--}}
                                 </div>
 {{--                                <div class="col-3 m-0 p-0">--}}
 {{--                                    <img src="{{$url}}" style="width: 70px;height:70px;" alt="...">--}}

@@ -131,25 +131,25 @@
                             <input type="text" style="display:none" id="regp_photo" name="regp_photo">
                         </div>
                     </div>
-{{--                    <div class="form-group">--}}
-{{--                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor')}} <span--}}
-{{--                                style="color:red">*</span></label>--}}
-{{--                        <div class="col-sm-10">--}}
-{{--                            <select required class="form-control" name="doctor_id">--}}
-{{--                                @foreach ($doctors as $doctor)--}}
-{{--                                    <option  value="{{$doctor->id}}">{{$doctor->name}}</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="form-group">--}}
-{{--                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor Fees')}} <span--}}
-{{--                                style="color:red">*</span></label>--}}
-{{--                        <div class="col-sm-10">--}}
-{{--                            <input type="text"  class="form-control pull-right"--}}
-{{--                                   name="amount" placeholder="Amount">--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor')}} <span
+                                style="color:red">*</span></label>
+                        <div class="col-sm-10">
+                            <select required class="form-control" name="doctor_id">
+                                @foreach ($doctors as $doctor)
+                                    <option  value="{{$doctor->id}}">{{$doctor->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor Fees')}} <span
+                                style="color:red">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text"  class="form-control pull-right"
+                                   name="amount" placeholder="Amount">
+                        </div>
+                    </div>
                     <div class="box-footer">
                         <input type="submit" class="btn btn-info pull-right" value="{{__('Register')}}">
                         <input type="reset" class="btn btn-default" value="{{__('Cancel')}}">

@@ -59,6 +59,7 @@ Route::post('/dischargeInpatient2', ['as' => 'disInPatient', 'uses' => 'PatientC
 Route::post('/dischargeInpatient3', ['as' => 'save_disinpatient', 'uses' => 'PatientController@store_disinpatient'])->middleware('auth', 'staff', 'lang');
 Route::get('/patientbill/{pid}', ['as' => 'pbill', 'uses' => 'PatientController@bill'])->middleware('auth', 'staff');
 Route::get('/billpdf/{patient}/{doctor}/{inpatient}/{payment}', ['as' => 'billpdf', 'uses' => 'PatientController@billPaymentPdf'])->middleware('auth', 'staff');
+Route::get('/regbillpdf/{patient}/{doctor}/{payment}', ['as' => 'regbillpdf', 'uses' => 'PatientController@regbillPaymentPdf'])->middleware('auth', 'staff');
 
 // Issue Medicine(Pharmacist Routes)
 Route::get('/issueMedicine/', ['as' => 'issueMedicineView', 'uses' => 'MedicineController@issueMedicineView'])->middleware('auth', 'pharmacist', 'lang');

@@ -812,9 +812,10 @@ class PatientController extends Controller
     function bill($id)
     {
         $patient = Patients::find($id);
-        $doctors = User::where('user_type', 'doctor')->get();
+        $doc_pat = DoctorPatient::where('patient_id', $id)->first();
+        $doctor = User::where('user_type', 'doctor')->where('id', $doc_pat->doctor_id)->first();
         $inpatient = inpatient::where('patient_id', $id)->whereNull('payment_id')->first();
-        return view('patient.bill', ['title' => "Edit Patient", 'patient' => $patient, 'doctors' => $doctors, 'inpatient' => $inpatient]);
+        return view('patient.bill', ['title' => "Edit Patient", 'patient' => $patient, 'doctor' => $doctor->name,'doctorId' => $doctor->id, 'inpatient' => $inpatient]);
     }
 
     public function billPayment(Request $request)

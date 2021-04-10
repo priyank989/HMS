@@ -49,12 +49,12 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="name">IPO No.</label>
-                            <input type="text" class="form-control" readonly id="name" name="ipo" placeholder="Enter IPO No.">
-                        </div>
-                    </div>
+{{--                    <div class="col-lg-4">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="name">IPO No.</label>--}}
+{{--                            <input type="text" class="form-control" readonly id="name" name="ipo" placeholder="Enter IPO No.">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <div class="col-lg-4">
                         <div class="form-group">
@@ -66,15 +66,23 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="g-name">Consultant Name</label>
-                            <select required class="form-control" name="doctor_id">
-                                <option  value="_none">Select</option>
-                                @foreach ($doctors as $doctor)
-                                    <option  value="{{$doctor->id}}">{{$doctor->name}}</option>
-                                @endforeach
-                            </select>
+{{--                            <select required class="form-control" name="doctor_id">--}}
+{{--                                <option  value="_none">Select</option>--}}
+{{--                                @foreach ($doctors as $doctor)--}}
+{{--                                    <option  value="{{$doctor->id}}">{{$doctor->name}}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+                            <input type="text" class="form-control" readonly value="{{$doctor}}" id="doctor" placeholder="Doctor">
+                            <input type="hidden" name="doctor_id" class="form-control" readonly value="{{$doctorId}}" id="doctor" placeholder="Doctor">
                         </div>
                     </div>
-
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="name">Guardian Name</label>
+                            <input type="text" required  class="form-control pull-right"
+                                   value="{{$patient->guardian}}" readonly placeholder="Guardian Name">
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -87,20 +95,20 @@
         </div>
 
         <div class="form-row">
-            <div class="col-lg-2">
-                <div class="form-group">
-                    <label for="name">Admit Date</label>
-                    <input type="date" required  class="form-control pull-right"
-                           name="admit_date" placeholder="Admit Date">
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="form-group">
-                    <label for="name">Guardian Name</label>
-                    <input type="text" required  class="form-control pull-right"
-                           value="{{$patient->guardian}}" readonly placeholder="Guardian Name">
-                </div>
-            </div>
+{{--            <div class="col-lg-2">--}}
+{{--                <div class="form-group">--}}
+{{--                    <label for="name">Admit Date</label>--}}
+{{--                    <input type="date" required  class="form-control pull-right"--}}
+{{--                           name="admit_date" placeholder="Admit Date">--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-lg-2">--}}
+{{--                <div class="form-group">--}}
+{{--                    <label for="name">Guardian Name</label>--}}
+{{--                    <input type="text" required  class="form-control pull-right"--}}
+{{--                           value="{{$patient->guardian}}" readonly placeholder="Guardian Name">--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
 
 

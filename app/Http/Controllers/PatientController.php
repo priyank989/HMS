@@ -740,9 +740,9 @@ class PatientController extends Controller
         $app->doctor_id = $request->doctor_id;
         $app->save();
         if ($request->fees != 0) {
-            $doctor_patient = inpatient::where('patient_id', $request->pid)->first();
+            $doctor_patient = DoctorPatient::where('patient_id', $request->pid)->first();
             $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
-            $doctor_patient->valid_till = Carbon::now()->addDay(20)->toDateTimeString();
+            $doctor_patient->doctor_d = Carbon::now()->addDay(20)->toDateTimeString();
             $doctor_patient->save();
         }
 //        $doctor_patient = new DoctorPatient();

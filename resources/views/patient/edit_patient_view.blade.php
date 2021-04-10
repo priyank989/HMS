@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">{{__('NIC Number')}}</label>
+                            <label for="inputEmail3" class="col-sm-2 control-label">{{__('Adhar')}}</label>
                             <div class="col-sm-10">
                                 <input  value="{{$patient->nic}}" type="text" required class="form-control" name="reg_pnic"
                                     placeholder="National Identity Card Number">

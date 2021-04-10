@@ -72,7 +72,7 @@
 
                         <tr>
                             <td><strong>DOA</strong></td>
-                            <td>: {{\Carbon\Carbon::parse($payment->admit_date)->format('d-M-Y')}}</td>
+                            <td>: {{\Carbon\Carbon::parse($inpatient->created_at)->format('d-M-Y')}}</td>
                         </tr>
 
                         <tr>

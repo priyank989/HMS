@@ -21,7 +21,7 @@
                     <strong>Shree Pradhan Healthcare private limited</strong>
                     <h5>Reg. Off-At -Khabra P.S-Sadar,Musahari, Muzaffarpur Bihar PIN-842001</h5>
                     <h5>CIN-U85110BR2020PTCO47423</h5>
-                    <h5>Registration Recipt</h5>
+                    <h5><strong>Registration Recipt</strong></h5>
                 </td>
             </tr>
             <tr>
@@ -42,7 +42,7 @@
 
                         <tr>
                             <td><strong>Guardian Name</strong></td>
-                            <td>: <strong>{{$patient->guardian}} <span style="padding-left: 10px;">{{\Carbon\Carbon::parse($patient->bod)->age}} Years | {{$patient->sex}}</span></strong></td>
+                            <td>: <strong>{{$patient->guardian}} </strong></td>
                         </tr>
 
                         <tr>
@@ -138,7 +138,7 @@
             </tr>
         </table>
         <div>
-            <input type="button" value="Print this page" onClick="window.print()">
+            <button onclick="window.print()" class="btn no-print btn-lg btn-info">Print <i class="fas fa-print"></i></button>
         </div>
     </div>
 @endsection

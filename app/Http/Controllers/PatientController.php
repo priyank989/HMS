@@ -598,7 +598,8 @@ class PatientController extends Controller
         $user = Auth::user();
         $patients =  DB::table('patients')
             ->join('inpatients', 'patients.id', '=', 'inpatients.patient_id')
-            ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'patients.bod as bod', 'patients.updated_at', 'inpatients.payment_id', 'inpatients.id as ipd','inpatients.discharged_officer')
+            ->join('doctor_patients', 'doctor_patients.patient_id', '=', 'patients.id')
+            ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'patients.bod as bod', 'patients.updated_at', 'inpatients.payment_id', 'inpatients.id as ipd','inpatients.discharged_officer', 'doctor_patients.doctor_id')
             ->whereRaw(DB::Raw("inpatients.discharged='YES'"))
             ->get();
         return view('patient.discharge_inpatient_view', ['title' => "Discharge Inpatient", 'patients' => $patients]);
@@ -726,13 +727,18 @@ public function addChannel(Request $request)
         $app->payment_id = $payment->id;
         $app->doctor_id = $request->doctor_id;
         $app->save();
-
-        $doctor_patient = new DoctorPatient();
-        $doctor_patient->doctor_id = $request->doctor_id;
-        $doctor_patient->patient_id = $pid;
-        $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
-        $doctor_patient->registration_date = Carbon::now()->addDay(20)->toDateTimeString();
-        $doctor_patient->save();
+        if($request->fees !=0){
+            $doctor_patient = inpatient::where('patient_id', $request->pid)->first();
+            $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
+            $doctor_patient->valid_till = Carbon::now()->addDay(20)->toDateTimeString();
+            $doctor_patient->save();
+        }
+//        $doctor_patient = new DoctorPatient();
+//        $doctor_patient->doctor_id = $request->doctor_id;
+//        $doctor_patient->patient_id = $pid;
+//        $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
+//        $doctor_patient->registration_date = Carbon::now()->addDay(20)->toDateTimeString();
+//        $doctor_patient->save();
 
 
         try {
@@ -819,12 +825,13 @@ public function addChannel(Request $request)
         $payment->paid_amount = $total_amount;
         $payment->save();
 
-        $doctor_patient = new DoctorPatient();
-        $doctor_patient->doctor_id = $request->doctor_id;
-        $doctor_patient->patient_id = $request->pid;
-        $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
-        $doctor_patient->registration_date = Carbon::now()->addDay(20)->toDateTimeString();
-        $doctor_patient->save();
+//        $doctor_patient = new DoctorPatient();
+//        $doctor_patient->doctor_id = $request->doctor_id;
+//        $doctor_patient->patient_id = $request->pid;
+//        $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
+//        $doctor_patient->registration_date = Carbon::now()->addDay(20)->toDateTimeString();
+//        $doctor_patient->save();
+
         $patient = Patients::find($request->pid);
         $doctor = User::find($request->doctor_id);
         $inpatient = inpatient::where('patient_id', $request->pid)->whereNull('payment_id')->first();

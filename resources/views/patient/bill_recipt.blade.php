@@ -21,11 +21,11 @@
                     <strong>Shree Pradhan Healthcare private limited</strong>
                     <h5>Reg. Off-At -Khabra P.S-Sadar,Musahari, Muzaffarpur Bihar PIN-842001</h5>
                     <h5>CIN-U85110BR2020PTCO47423</h5>
-                    <h5>Discharge Recipt</h5>
+                    <h5><strong>Discharge Recipt</strong></h5>
                 </td>
             </tr>
             <tr>
-                <td style="border: 1px solid;">
+                <td style="border: 1px solid;padding: 10px;">
                     <table>
                         <tr>
                             <td><strong>Patient Name</strong></td>
@@ -34,7 +34,7 @@
 
                         <tr>
                             <td><strong>Guardian Name</strong></td>
-                            <td>: <strong>{{$patient->guardian}} <span style="padding-left: 10px;">{{\Carbon\Carbon::parse($patient->bod)->age}} Years | {{$patient->sex}}</span></strong></td>
+                            <td>: <strong>{{$patient->guardian}} </strong></td>
                         </tr>
 
                         <tr>
@@ -53,12 +53,13 @@
                         </tr>
                     </table>
                 </td>
-                <td  style="border: 1px solid;">
-                    <table>
+                <td style="border: 1px solid;padding: 10px;">                    <table>
                         <tr>
                             <td><strong>Bill No.</strong></td>
                             <td>: {{$payment->id}}</td>
+                        </tr>
 
+                        <tr>
 
                             <td><strong>Bill Date</strong></td>
                             <td>: {{\Carbon\Carbon::parse($payment->created_at)->format('d-M-Y')}}</td>
@@ -66,8 +67,10 @@
 
                         <tr>
                             <td><strong>UHID No.</strong></td>
-                            <td>: {{$payment->id}}</td>
+                            <td>: {{$patient->id}}</td>
+                        </tr>
 
+                        <tr>
                             <td><strong>DOA</strong></td>
                             <td>: {{\Carbon\Carbon::parse($payment->admit_date)->format('d-M-Y')}}</td>
                         </tr>
@@ -142,7 +145,7 @@
             </tr>
         </table>
         <div>
-            <input type="button" value="Print this page" onClick="window.print()">
+            <button onclick="window.print()" class="btn no-print btn-lg btn-info">Print <i class="fas fa-print"></i></button>
         </div>
     </div>
 @endsection

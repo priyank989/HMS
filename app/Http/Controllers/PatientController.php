@@ -448,7 +448,7 @@ class PatientController extends Controller
     public function create_channel_view()
     {
         $user = Auth::user();
-        $appointments = DB::table('appointments')->join('patients', 'appointments.patient_id', '=', 'patients.id')->join('doctor_patients', 'patients.id', '=', 'doctor_patients.patient_id')->join('users', 'users.id', '=', 'doctor_patients.doctor_id')->select('users.id as doctor_id', 'users.name as uname', 'patients.name', 'appointments.number', 'appointments.patient_id', 'appointments.payment_id')->whereRaw(DB::Raw('Date(appointments.created_at)=CURDATE()'))->orderBy('appointments.created_at', 'desc')->get();
+        $appointments = DB::table('appointments')->join('patients', 'appointments.patient_id', '=', 'patients.id')->join('users', 'users.id', '=', 'appointments.doctor_id')->select('users.id as doctor_id', 'users.name as uname', 'patients.name', 'appointments.number', 'appointments.patient_id', 'appointments.payment_id')->whereRaw(DB::Raw('Date(appointments.created_at)=CURDATE()'))->orderBy('appointments.created_at', 'desc')->get();
         $doctors = User::where('user_type', 'doctor')->get();
 
         return view('patient.create_channel_view', ['title' => "Channel Appointments", 'appointments' => $appointments, 'doctors' => $doctors]);

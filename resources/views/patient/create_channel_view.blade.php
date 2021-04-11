@@ -258,7 +258,7 @@
                     $("#createchannel3").slideDown(1000);
                 }
                 else{
-                    // location.reload();
+                    location.reload();
                 }
                  //
             }

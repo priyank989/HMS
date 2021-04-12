@@ -106,8 +106,8 @@
                     {{--                    <div style="max-width: 80%; padding-top: 10px;">dslajf ldsajf; jasl;f jlksa jfdjdsaf lkjdsa f;lkdsajf ;jdsaf ;lks jfda;sjaf;l dsaf</div>--}}
                 </td>
 
-                <td style="border-top:1px solid;"><strong>Gross Total :</strong></td>
-                <td style="border-top:1px solid;"><strong>{{$total_amount}}</strong></td>
+                <td style="border-top:1px solid;"><strong>Total Amount :</strong></td>
+                <td style="border-top:1px solid;"><strong>{{number_format($total_amount, 2)}}</strong></td>
             </tr>
             {{--            <tr>--}}
             {{--                <td>Discount: </td>--}}

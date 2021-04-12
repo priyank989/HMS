@@ -146,8 +146,8 @@
                         <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor Fees')}} <span
                                 style="color:red">*</span></label>
                         <div class="col-sm-10">
-                            <input type="text"  class="form-control pull-right"
-                                   name="amount" placeholder="Amount">
+                            <input type="text" maxlength="4"  class="form-control pull-right"
+                                   name="amount" placeholder="Amount" required>
                         </div>
                     </div>
                     <div class="box-footer">

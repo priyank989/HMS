@@ -679,7 +679,7 @@ class PatientController extends Controller
             $num = DB::table('appointments')->select('id')->whereRaw(DB::raw("date(created_at)=CURDATE()"))->count() + 1;
             $day_left = Carbon::parse(Carbon::now())->diffInDays($doc_pat->valid_till, false);
             $validity = 1;
-            if ($day_left < 0) {
+            if ($day_left <= 0) {
                 $validity = 0;
             }
             return response()->json([
@@ -723,10 +723,10 @@ class PatientController extends Controller
         $payment->created_by = $user->id;
         $payment->total_amount = $request->fees;
         $payment->service_name = json_encode(array('doctor fess' => $request->fees));
-        $payment->bill_type = 'appointment';
-        if ($request->fees == 0) {
-            $payment->bill_type = 'followup';
-        }
+        $payment->bill_type = $request->bill_type;
+        $payment->paid_amount = $request->fees;
+        $payment->paid_status = 'Complete';
+
         $payment->save();
 
         $app = new Appointment;
@@ -739,7 +739,7 @@ class PatientController extends Controller
         $app->payment_id = $payment->id;
         $app->doctor_id = $request->doctor_id;
         $app->save();
-        if ($request->fees != 0) {
+        if ($request->bill_type == "Appointment") {
             $doctor_patient = DoctorPatient::where('patient_id', $pid)->first();
             $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
             $doctor_patient->valid_till = Carbon::now()->addDay(20)->toDateTimeString();

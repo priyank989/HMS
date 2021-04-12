@@ -58,6 +58,7 @@
                         <label for="inputEmail3" class="col-sm-2 control-label">{{__('Full Name')}}</label>
                         <div class="col-sm-10">
                             <input type="text" readonly class="form-control" name="reg_pname" id="patient_name">
+                            <input type="hidden" readonly class="form-control" name="bill_type" id="bill_type">
                         </div>
                     </div>
                     <div class="form-group">
@@ -116,7 +117,7 @@
                         <label for="inputPassword3" class="col-sm-2 control-label">{{__('Doctor Fees')}} <span
                                 style="color:red">*</span></label>
                         <div class="col-sm-10">
-                            <input type="text"  class="form-control pull-right"
+                            <input type="text"  maxlength="4" class="form-control pull-right"
                                    name="amount" placeholder="Amount" id="fees">
                         </div>
                     </div>
@@ -208,7 +209,7 @@
                             <td>{{$app->number}}</td>
                             <td>{{$app->name}}</td>
                             <td>{{$app->uname}}</td>
-                            <td><a href="{{route('regbillpdf',[$app->patient_id, $app->doctor_id, $app->payment_id])}}">Bill genrate</a></td>
+                            <td><a href="{{route('regbillpdf',[$app->patient_id, $app->doctor_id, $app->payment_id])}}">Print Recipt</a></td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -237,32 +238,40 @@
         $(".error-msg").hide();
         $("#makeBtn").hide();
         var fees = $("#fees").val();
-        var doctor_id = $("select#doctor_name option").filter(":selected").val();
-        var data=new FormData;
-        data.append('_token','{{csrf_token()}}');
-        data.append('id',patientid);
-        data.append('fees',fees);
-        data.append('doctor_id',doctor_id);
-        $.ajax({
-            type: "post",
-            url: "{{route('makeappoint')}}",
-            processData: false,
-            contentType: false,
-            cache: false,
-            data:data,
-            success: function (response) {
-                if(response['error']){
-                    $(".error-msg").show();
-                    $("#createchannel1").slideUp(1000);
-                    $("#createchannel2").slideUp(1000);
-                    $("#createchannel3").slideDown(1000);
+        var bill_type = $("#bill_type").val();
+        if(fees > 9999){
+            alert("Please Enter a Valid Fees");
+        }
+        else{
+            var doctor_id = $("select#doctor_name option").filter(":selected").val();
+            var data=new FormData;
+            data.append('_token','{{csrf_token()}}');
+            data.append('id',patientid);
+            data.append('fees',fees);
+            data.append('doctor_id',doctor_id);
+            data.append('bill_type',bill_type);
+            $.ajax({
+                type: "post",
+                url: "{{route('makeappoint')}}",
+                processData: false,
+                contentType: false,
+                cache: false,
+                data:data,
+                success: function (response) {
+                    if(response['error']){
+                        $(".error-msg").show();
+                        $("#createchannel1").slideUp(1000);
+                        $("#createchannel2").slideUp(1000);
+                        $("#createchannel3").slideDown(1000);
+                    }
+                    else{
+                        // location.reload();
+                    }
+                    //
                 }
-                else{
-                    location.reload();
-                }
-                 //
-            }
-        });
+            });
+        }
+
     }
 
     function createChannelFunction() {
@@ -302,10 +311,12 @@
                         $("#appt_num").text(patient.appNum);
                         if(patient.validity == 0){
                             $("#app_text").html('Create Appointment');
+                            $("#bill_type").val('Appointment');
                         }
                         else{
                             $("#fees").val(0);
                             $("#app_text").html('Followup Appointment');
+                            $("#bill_type").val('Followup');
                         }
                         if(patient.doctor_id){
                             $("#doctor_name").val(patient.doctor_id);

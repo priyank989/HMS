@@ -725,7 +725,7 @@ class PatientController extends Controller
         $payment->service_name = json_encode(array('doctor fess' => $request->fees));
         $payment->bill_type = $request->bill_type;
         $payment->paid_amount = $request->fees;
-        $payment->paid_status = 'Complete';
+        $payment->payment_status = 'Complete';
 
         $payment->save();
 

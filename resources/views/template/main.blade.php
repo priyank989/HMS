@@ -474,6 +474,9 @@ $outlet = 'Rural Ayruvedic Hospital Kesbawa';
                     <li class="{{Active::checkRoute('profile')}}"><a href="{{route('profile')}}"><i
                                 class="fas fa-user"></i><span> Profile</span></a></li>
 
+                    <li class="{{Active::checkRoute('payment-list')}}"><a href="{{route('payment-list')}}"><i
+                                class="fas fa-money-bill"></i><span> Payment</span></a></li>
+
                     {{-- Wards --}}
 
 {{--                    @if($user_type!="Pharmacist")--}}

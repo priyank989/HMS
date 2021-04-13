@@ -61,6 +61,8 @@ Route::get('/patientbill/{pid}', ['as' => 'pbill', 'uses' => 'PatientController@
 Route::get('/billpdf/{patient}/{doctor}/{inpatient}/{payment}', ['as' => 'billpdf', 'uses' => 'PatientController@billPaymentPdf'])->middleware('auth', 'staff');
 Route::get('/regbillpdf/{patient}/{doctor}/{payment}', ['as' => 'regbillpdf', 'uses' => 'PatientController@regbillPaymentPdf'])->middleware('auth', 'staff');
 
+Route::get('/payment-list', ['as' => 'payment-list', 'uses' => 'PaymentController@index'])->middleware('auth', 'staff');
+
 // Issue Medicine(Pharmacist Routes)
 Route::get('/issueMedicine/', ['as' => 'issueMedicineView', 'uses' => 'MedicineController@issueMedicineView'])->middleware('auth', 'pharmacist', 'lang');
 Route::post('/issuemed-validate', ['as' => 'issueMedicine2', 'uses' => 'MedicineController@issueMedicineValid'])->middleware('auth', 'pharmacist', 'lang');

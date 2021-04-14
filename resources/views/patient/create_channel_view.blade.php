@@ -314,11 +314,15 @@
                         $("#appt_num").text(patient.appNum);
                         if(patient.validity == 0){
                             $("#app_text").html('Create Appointment');
+                            $("#valDate").css("color", "red");
+
                             $("#bill_type").val('Appointment');
                         }
                         else{
                             $("#fees").val(0);
                             $("#app_text").html('Followup Appointment');
+                            $("#valDate").css("color", "green");
+
                             $("#bill_type").val('Followup');
                         }
                         if(patient.doctor_id){

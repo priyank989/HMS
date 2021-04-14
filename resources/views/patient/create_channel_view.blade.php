@@ -242,6 +242,9 @@
         if(fees > 9999){
             alert("Please Enter a Valid Fees");
         }
+        // if(){
+        //
+        // }
         else{
             var doctor_id = $("select#doctor_name option").filter(":selected").val();
             var data=new FormData;

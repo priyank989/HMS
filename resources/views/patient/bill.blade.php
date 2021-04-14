@@ -199,10 +199,10 @@
 
                     <tr class="item-row">
                         <td></td>
-                        <td class="description"><input type="text" class="form-control" name="service[0][desc]"></td>
-                        <td><input type="text" class="form-control" name="service[0][rate]"></td>
-                        <td><input type="text" class="form-control" name="service[0][unit]"></td>
-                        <td><input type="text" class="form-control" name="service[0][amount]"></td>
+                        <td class="description"><input required type="text" class="form-control" name="service[0][desc]"></td>
+                        <td><input required type="number" class="form-control" name="service[0][rate]"></td>
+                        <td><input required type="number" class="form-control" name="service[0][unit]"></td>
+                        <td><input required type="number" class="form-control" name="service[0][amount]"></td>
                         <td><button type="button" class="delete btn btn-sm btn-danger">Remove</button></td>
                     </tr>
 
@@ -254,7 +254,7 @@
         var count = 0;
             $("#addrow").click(function(){
                 count++;
-                $(".item-row:last").after('<tr class="item-row"><td></td><td class="description"><input type="text" class="form-control" name="service['+count+'][desc]"></td><td><input type="text" class="form-control" name="service['+count+'][rate]"></td><td><input type="text" class="form-control" name="service['+count+'][unit]"></td><td><input type="text" class="form-control" name="service['+count+'][amount]"></td><td><button type="button" class="delete btn btn-sm btn-danger">Remove</button></td></tr>');
+                $(".item-row:last").after('<tr class="item-row"><td></td><td class="description"><input required type="text" class="form-control" name="service['+count+'][desc]"></td><td><input required type="number" class="form-control" name="service['+count+'][rate]"></td><td><input required type="number" class="form-control" name="service['+count+'][unit]"></td><td><input required type="number" class="form-control" name="service['+count+'][amount]"></td><td><button type="button" class="delete btn btn-sm btn-danger">Remove</button></td></tr>');
                 if ($(".delete").length > 0) $(".delete").show();
             });
 

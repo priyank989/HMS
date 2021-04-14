@@ -85,7 +85,10 @@
                                                 <tr>
                                                     <th>Patient ID</th>
                                                     <th>Patient Name</th>
+                                                    <th>Doctor Name</th>
+                                                    <th>Bill Type</th>
                                                     <th>Amount</th>
+                                                    <th>Payment Date</th>
 
                                                 </tr>
                                                 </thead>
@@ -95,7 +98,10 @@
 
                                                         <td>{{$payment->pid}}</td>
                                                         <td>{{$payment->name}}</td>
+                                                        <td>{{isset($payment->dn) ? $payment->dn : ''}}</td>
+                                                        <td>{{$payment->bill_type}}</td>
                                                         <td>{{$payment->total_amount}}</td>
+                                                        <td>{{\Carbon\Carbon::parse($payment->payment_date)->format('d-M-Y')}}</td>
                                                         {{--                                                        <td>{{$patient->sex}}</td>--}}
                                                         {{--                                                        <td>{{\Carbon\Carbon::parse($patient->bod)->format('d/M/Y')}}</td>--}}
                                                         {{--                                                        <td>--}}
@@ -108,7 +114,10 @@
                                                 <tfoot>
                                                 <th>Patient ID</th>
                                                 <th>Patient Name</th>
+                                                <th>Doctor Name</th>
+                                                <th>Bill Type</th>
                                                 <th>Amount</th>
+                                                <th>Payment Date</th>
                                                 {{--                                                <th>Gender</th>--}}
                                                 {{--                                                <th>Date of birth</th>--}}
                                                 {{--                                                <th>Action</th>--}}

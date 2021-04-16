@@ -76,11 +76,15 @@
                             <input type="hidden" name="doctor_id" class="form-control" readonly value="{{$doctorId}}" id="doctor" placeholder="Doctor">
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                         <div class="form-group">
-                            <label for="name">Guardian Name</label>
-                            <input type="text" required  class="form-control pull-right"
-                                   value="{{$patient->guardian}}" readonly placeholder="Guardian Name">
+                            <label for="name">Bill Type</label>
+                            <select class="form-control" required name="bill_type">
+                                <option value="_none">Select</option>
+                                <option value="x-ray">X-ray</option>
+                                <option value="medicine">Medicine</option>
+                                <option value="genral">Genral</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -133,16 +137,7 @@
 {{--                </div>--}}
 {{--            </div>--}}
 
-            <div class="col-lg-2">
-                <div class="form-group">
-                    <label for="name">Bill Type</label>
-                    <select class="form-control" required name="bill_type">
-                        <option value="_none">Select</option>
-                        <option value="x-ray">X-ray</option>
-                        <option value="medicine">Medicine</option>
-                    </select>
-                </div>
-            </div>
+
 
 {{--            <div class="col-lg-2">--}}
 {{--                <div class="form-group">--}}

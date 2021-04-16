@@ -896,7 +896,7 @@ class PatientController extends Controller
         $payment->created_by = $user->id;
         $payment->doctor_id = $request->doctor_id;
         $payment->patient_id = $request->pid;
-        $payment->bill_type = $payment->bill_type;
+        $payment->bill_type = $request->bill_type;
         $payment->payment_type = 'Cash';
         $payment->payment_status = 'Complete';
         $payment->service_name = json_encode($request->service);

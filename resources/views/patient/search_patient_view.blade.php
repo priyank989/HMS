@@ -136,7 +136,7 @@
                                     <td>{{$patient->address}}</td>
                                     <td>{{$patient->sex}}</td>
                                     <td>{{\Carbon\Carbon::parse($patient->bod)->format('d/M/Y')}}</td>
-                                    <td><a href="{{route('pbill',[$patient->id])}}">Bill genrate</a></td>
+                                    <td><a href="{{route('mbill',[$patient->id])}}">Bill genrate</a></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -145,6 +145,8 @@
                             <th>Address</th>
                             <th>Gender</th>
                             <th>Date of birth</th>
+                            <th>Action</th>
+
                             </tfoot>
                         </table>
                     </div>

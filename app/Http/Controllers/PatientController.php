@@ -883,4 +883,40 @@ class PatientController extends Controller
         $doc_pat = DoctorPatient::where('patient_id', $patient->id)->first();
         return view('patient.reg_bill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'doc_pat' => $doc_pat]);
     }
+
+    public function mbillPayment(Request $request)
+    {
+        $total_amount = 0;
+        foreach ($request->service as $service) {
+            $total_amount = $service['amount'] + $total_amount;
+        }
+        $payment = new Payment();
+        $user = Auth::user();
+        $payment->updated_by = $user->id;
+        $payment->created_by = $user->id;
+        $payment->doctor_id = $request->doctor_id;
+        $payment->patient_id = $request->pid;
+        $payment->bill_type = $payment->bill_type;
+        $payment->payment_type = 'Cash';
+        $payment->payment_status = 'Complete';
+        $payment->service_name = json_encode($request->service);
+        $payment->uhid = Carbon::now()->timestamp;
+        $payment->admit_date = $request->admit_date;
+        $payment->total_amount = $total_amount;
+        $payment->paid_amount = $total_amount;
+        $payment->save();
+        $patient = Patients::find($request->pid);
+        $doctor = User::find($request->doctor_id);
+        return view('patient.mbill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount]);
+
+    }
+
+    function mbill($id)
+    {
+        $patient = Patients::find($id);
+        $doc_pat = DoctorPatient::where('patient_id', $id)->first();
+        $doctor = User::where('user_type', 'doctor')->where('id', $doc_pat->doctor_id)->first();
+//        $inpatient = inpatient::where('patient_id', $id)->whereNull('payment_id')->first();
+        return view('patient.mbill', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor->name,'doctorId' => $doctor->id]);
+    }
 }

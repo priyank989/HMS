@@ -51,6 +51,8 @@ Route::get('/patient', ['as' => 'patient', 'uses' => 'PatientController@index'])
 Route::get('/patientregcard/{pid}', ['as' => 'pregcard', 'uses' => 'PatientController@regcard'])->middleware('auth', 'staff');
 Route::post('/patientregister', ['as' => 'patient_register', 'uses' => 'PatientController@registerPatient'])->middleware('auth', 'staff');
 Route::post('/billpayment', ['as' => 'bill_payment', 'uses' => 'PatientController@billPayment'])->middleware('auth', 'staff');
+Route::post('/mbillpayment', ['as' => 'bill_payment', 'uses' => 'PatientController@mbillPayment'])->middleware('auth', 'staff');
+
 Route::get('/inpatientregister', ['as' => 'register_in_patient_view', 'uses' => 'PatientController@register_in_patient_view'])->middleware('auth', 'staff', 'lang');
 Route::post('/inpatientregister2', ['as' => 'regInPatient', 'uses' => 'PatientController@regInPatientValid'])->middleware('auth', 'staff', 'lang');
 Route::post('/inpatientregister3', ['as' => 'save_inpatient', 'uses' => 'PatientController@store_inpatient'])->middleware('auth', 'staff', 'lang');
@@ -58,6 +60,8 @@ Route::get('/dischargeInpatient', ['as' => 'discharge_inpatient', 'uses' => 'Pat
 Route::post('/dischargeInpatient2', ['as' => 'disInPatient', 'uses' => 'PatientController@disInPatientValid'])->middleware('auth', 'staff', 'lang');
 Route::post('/dischargeInpatient3', ['as' => 'save_disinpatient', 'uses' => 'PatientController@store_disinpatient'])->middleware('auth', 'staff', 'lang');
 Route::get('/patientbill/{pid}', ['as' => 'pbill', 'uses' => 'PatientController@bill'])->middleware('auth', 'staff');
+Route::get('/mpatientbill/{pid}', ['as' => 'mbill', 'uses' => 'PatientController@mbill'])->middleware('auth', 'staff');
+
 Route::get('/billpdf/{patient}/{doctor}/{inpatient}/{payment}', ['as' => 'billpdf', 'uses' => 'PatientController@billPaymentPdf'])->middleware('auth', 'staff');
 Route::get('/regbillpdf/{patient}/{doctor}/{payment}', ['as' => 'regbillpdf', 'uses' => 'PatientController@regbillPaymentPdf'])->middleware('auth', 'staff');
 

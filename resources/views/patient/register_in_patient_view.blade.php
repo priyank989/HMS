@@ -135,7 +135,7 @@
                 <label class="col-sm-2 control-label">{{__('Nationality')}}<span style="color:red">*</span></label>
                 <div class="col-sm-2">
                     <select required class="form-control" name="reg_ipnation">
-                        <option selected value="Sinhala">Indian</option>
+                        <option selected value="Indian">Indian</option>
 
                     </select>
                 </div>

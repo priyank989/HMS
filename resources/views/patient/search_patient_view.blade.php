@@ -53,7 +53,7 @@
                         <label>
                             <input onchange="changeFunc('NIC Number');" style="display:inline-block" type="radio"
                                 name="cat" id="cat" value="nic">
-                            {{__('NIC Number')}}
+                            {{__('Adhaar Number')}}
                         </label>
                     </div>
                     <div class="col-md-1"></div>

@@ -21,7 +21,7 @@
                     <strong>Shree Pradhan Healthcare private limited</strong>
                     <h5>Reg. Off-At -Khabra P.S-Sadar,Musahari, Muzaffarpur Bihar PIN-842001</h5>
                     <h5>CIN-U85110BR2020PTCO47423</h5>
-                    <h5><strong>Bill Recipt</strong></h5>
+                    <h5><strong>Bill Receipt</strong></h5>
                 </td>
             </tr>
             <tr>

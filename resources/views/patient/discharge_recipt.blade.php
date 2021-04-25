@@ -19,7 +19,7 @@ use App\Patients;
 }
 }
 </style>
-<title>Print Discharge Recipt</title>
+<title>Print Discharge Receipt</title>
 </head>
 <body>
 
@@ -31,7 +31,7 @@ use App\Patients;
                 Shree Pradhan Healthcare private limited<br>
                 <small class=""><h5>Reg. Off-At -Khabra P.S-Sadar,Musahari, Muzaffarpur Bihar PIN-842001</h5></small>
                 <small class=""><h5>CIN-U85110BR2020PTCO47423</h5></small>
-                <small class="small">Discharge Reciept</small>
+                <small class="small">Discharge Receiept</small>
             </h1>
             <h3></h3>
             <br>

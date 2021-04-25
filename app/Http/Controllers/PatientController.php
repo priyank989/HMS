@@ -189,7 +189,7 @@ class PatientController extends Controller
             $payment->created_by = $user->id;
             $payment->doctor_id = $request->doctor_id;
             $payment->patient_id = $patient->id;
-            $payment->service_name = json_encode(array("doctor fees" => $request->amount, "registartion fess" => 50));
+            $payment->service_name = json_encode(array("Consultant Fee" => $request->amount, "Registration ee" => 50));
             $payment->bill_type = 'registration';
             $payment->total_amount = $request->amount + 50;
             $payment->save();
@@ -206,8 +206,12 @@ class PatientController extends Controller
 
             // Log Activity
             activity()->performedOn($patient)->withProperties(['Patient ID' => $reg_num])->log('Patient Registration Success');
+            $user = Auth::user();
+            $appointments = DB::table('appointments')->join('patients', 'appointments.patient_id', '=', 'patients.id')->join('users', 'users.id', '=', 'appointments.doctor_id')->select('users.id as doctor_id', 'users.name as uname', 'patients.name', 'appointments.number', 'appointments.patient_id', 'appointments.payment_id')->whereRaw(DB::Raw('Date(appointments.created_at)=CURDATE()'))->orderBy('appointments.created_at', 'desc')->get();
+            $doctors = User::where('user_type', 'doctor')->get();
 
-            return redirect()->back();
+            return view('patient.create_channel_view', ['title' => "Channel Appointments", 'appointments' => $appointments, 'doctors' => $doctors]);
+//            return redirect()->back();
         } catch (\Exception $e) {
             // do task when error
             $error = $e->getCode();
@@ -694,8 +698,8 @@ class PatientController extends Controller
                 'id' => $patient->id,
                 'doctor_id' => isset($doc_pat) ? $doc_pat->doctor_id : '',
                 'appNum' => $num,
-                'valid_from' => $doc_pat->registration_date,
-                'valid_till' => $doc_pat->valid_till,
+                'valid_from' => Carbon::parse($doc_pat->registration_date)->format('d/M/Y'),
+                'valid_till' => Carbon::parse($doc_pat->valid_till)->format('d/M/Y'),
                 'day' => $day_left,
                 'validity' => $validity
             ]);
@@ -722,7 +726,7 @@ class PatientController extends Controller
         $payment->updated_by = $user->id;
         $payment->created_by = $user->id;
         $payment->total_amount = $request->fees;
-        $payment->service_name = json_encode(array('doctor fees' => $request->fees));
+        $payment->service_name = json_encode(array('Consultant Fee' => $request->fees));
         $payment->bill_type = $request->bill_type;
         $payment->paid_amount = $request->fees;
         $payment->payment_status = 'Complete';

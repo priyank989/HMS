@@ -68,7 +68,7 @@
                         <div class="col-7 m-0 p-0">
                             <div class="row m-0 p-0">
                                 <div class=" m-0 p-0 col-7">
-                                    <span>{{$id}}<br></span>
+                                    <span><strong>{{$id}}</strong><br></span>
                                     <span>{{$name}}<br></span>
 {{--                                    <span>{{$doctor_name}}<br></span>--}}
                                     <span>{{\Carbon\Carbon::parse($dob)->age}} <br></span>

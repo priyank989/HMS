@@ -67,7 +67,7 @@
 
                         <tr>
                             <td><strong>UHID No.</strong></td>
-                            <td>: {{$patient->id}}</td>
+                            <td>: <strong>{{$patient->id}}</strong></td>
                         </tr>
 
 {{--                        <tr>--}}

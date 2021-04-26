@@ -120,7 +120,7 @@ class PatientController extends Controller
 
     public function searchPatient(Request $request)
     {
-        $patients = Patients::all();
+        $patients = Patients::query()->orderBy('created_at', 'DESC')->get();
 //        dd($patients);
         return view('patient.search_patient_view', ['title' => "Search Patient", "old_keyword" => null, "search_result" => "", 'patients' => $patients]);
     }
@@ -179,7 +179,7 @@ class PatientController extends Controller
             $doctor_patient->doctor_id = $request->doctor_id;
             $doctor_patient->patient_id = $patient->id;
             $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
-            $doctor_patient->valid_till = Carbon::now()->addDay(20)->toDateTimeString();
+            $doctor_patient->valid_till = Carbon::now()->addDay(19)->toDateTimeString();
             $doctor_patient->save();
 
 
@@ -481,6 +481,7 @@ class PatientController extends Controller
             ->join('inpatients', 'patients.id', '=', 'inpatients.patient_id')
             ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'patients.bod as bod', 'patients.updated_at')
             ->whereRaw(DB::Raw("inpatients.discharged!='YES'"))
+            ->orderBy('patients.created_at', 'DESC')
             ->get();
         $data = DB::table('wards')
             ->select('*')
@@ -616,6 +617,7 @@ class PatientController extends Controller
             ->join('doctor_patients', 'doctor_patients.patient_id', '=', 'patients.id')
             ->select('patients.id as id', 'patients.name as name', 'patients.sex as sex', 'patients.address as address', 'patients.occupation as occ', 'patients.telephone as tel', 'patients.nic as nic', 'patients.bod as bod', 'patients.updated_at', 'inpatients.payment_id', 'inpatients.id as ipd', 'inpatients.discharged_officer', 'doctor_patients.doctor_id')
             ->whereRaw(DB::Raw("inpatients.discharged='YES'"))
+            ->orderBy('patients.created_at', 'DESC')
             ->get();
         return view('patient.discharge_inpatient_view', ['title' => "Discharge Inpatient", 'patients' => $patients]);
     }
@@ -746,7 +748,7 @@ class PatientController extends Controller
         if ($request->bill_type == "Appointment") {
             $doctor_patient = DoctorPatient::where('patient_id', $pid)->first();
             $doctor_patient->registration_date = Carbon::now()->toDateTimeString();
-            $doctor_patient->valid_till = Carbon::now()->addDay(20)->toDateTimeString();
+            $doctor_patient->valid_till = Carbon::now()->addDay(19)->toDateTimeString();
             $doctor_patient->save();
         }
 //        $doctor_patient = new DoctorPatient();

@@ -32,8 +32,8 @@
                             <td>: {{$payment->id}}</td>
                         </tr>
                         <tr>
-                            <td><strong>UHID No.</strong></td>
-                            <td>: {{$patient->id}}</td>
+                            <td>UHID No.</td>
+                            <td>: <strong>{{$patient->id}}</strong></td>
                         </tr>
                         <tr>
                             <td><strong>Patient Name</strong></td>

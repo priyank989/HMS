@@ -189,7 +189,7 @@ class PatientController extends Controller
             $payment->created_by = $user->id;
             $payment->doctor_id = $request->doctor_id;
             $payment->patient_id = $patient->id;
-            $payment->service_name = json_encode(array("Consultant Fee" => $request->amount, "Registration ee" => 50));
+            $payment->service_name = json_encode(array("Consultant Fee" => $request->amount, "Registration Fee" => 50));
             $payment->bill_type = 'registration';
             $payment->total_amount = $request->amount + 50;
             $payment->save();

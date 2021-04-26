@@ -49,7 +49,7 @@
 
                         <tr>
                             <td><strong>Consultant Name</strong></td>
-                            <td>: {{$doctor->name}}</td>
+                            <td>: DR. {{$doctor->name}}</td>
                         </tr>
                     </table>
                 </td>

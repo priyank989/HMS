@@ -67,7 +67,7 @@
             </div>
 
             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">{{__('Adhaar')}}<span style="color:red">*</span></label>
+                <label for="inputEmail3" class="col-sm-2 control-label">{{__('Aadhar')}}<span style="color:red">*</span></label>
                 <div class="col-sm-10">
                     <input type="text" required readonly class="form-control" name="reg_pnic" id="patient_nic"
                         placeholder="National Identity Card Number">

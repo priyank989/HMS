@@ -244,7 +244,7 @@
 
                         <div class="col-sm-3">
                             <div class="btn-group pull-right" role="group" aria-label="Button group">
-                                <button type="button" onclick="go('{{$patient->id}}')" class="btn bg-navy"><i class="far fa-id-card"></i> {{__('Profile')}}</button>
+                                <a type="button" href="{{url('patient/'.$patient->id)}}" class="btn bg-navy"><i class="far fa-id-card"></i> {{__('Profile')}}</a>
                             <button @if($patient->trashed()) type="button" disabled @endif class="btn btn-warning"><i class="fas fa-edit"></i> {{__('Edit')}}</button>
                             </div>
 

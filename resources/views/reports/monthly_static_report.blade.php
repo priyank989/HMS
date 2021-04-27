@@ -17,7 +17,7 @@
     $name = $user->name;
     $user_type = $user->user_type;
     $image_path = $user->img_path;
-    $outlet = 'Rural Ayruvedic Hospital Kesbawa'?>
+    $outlet = 'Shree Pradhan Hospital'?>
 
 <style>
     @media print {
@@ -49,7 +49,7 @@
                         <h4 align="center">{{__('Monthly Statics Report')}}</h4>
 
                         <br>
-                        {{__('Institute')}} : {{__('Rural Ayruvedic Hospital Kesbawa')}}
+                        {{__('Institute')}} : {{__('Shree Pradhan Hospital')}}
                         <div class="pull-right">
                             <?php echo date('Y F'); ?>
                             <br>

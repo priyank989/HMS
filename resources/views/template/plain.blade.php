@@ -3,7 +3,7 @@
 $name = ucwords($user->name);
 $user_type = ucfirst($user->user_type);
 $image_path = $user->img_path;
-$outlet = 'Rural Ayruvedic Hospital Kesbawa';
+$outlet = 'Shree Pradhan Hospital';
 \App::setLocale(Session::get('locale'));
 ?>
 

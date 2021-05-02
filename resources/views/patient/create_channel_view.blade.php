@@ -356,7 +356,7 @@
             'paging': true,
             'lengthChange': false,
             'searching': true,
-            'ordering': true,
+            'ordering': false,
             'info': true,
             'autoWidth': false
         })

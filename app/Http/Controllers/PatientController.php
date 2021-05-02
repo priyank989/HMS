@@ -154,7 +154,10 @@ class PatientController extends Controller
             $reg_num = $year . $month . $day . $number;
 
             $date = date_create($request->reg_pbd);
-
+            $age_year = $request->age_year;
+            if($age_year > 0){
+                $date = date_create(Carbon::now()->subYear($age_year));
+            }
             $patient->id = $reg_num;
             $patient->name = $request->reg_pname;
             $patient->address = $request->reg_paddress;

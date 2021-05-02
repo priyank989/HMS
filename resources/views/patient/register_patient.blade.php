@@ -100,7 +100,7 @@
 
                     <!-- select -->
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{__('Sex')}}<span style="color:red">*</span></label>
+                        <label class="col-sm-2 control-label">{{__('Gender')}}<span style="color:red">*</span></label>
                         <div class="col-sm-2 mr-0 pr-0">
                             <select required class="form-control" name="reg_psex">
                                 <option selected value="Male">Male</option>
@@ -114,21 +114,17 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="date" required  class="form-control pull-right"
+                                <input type="date"   class="form-control pull-right"
                                     name="reg_pbd" placeholder="Birthday">
                             </div>
 
                         </div>
 
 
-                        <label for="photo" class="col-sm-1 control-label">{{__('Picture')}}</label>
+                        <label for="photo" class="col-sm-1 control-label">{{__('Age')}}</label>
                         <div class="col-sm-2">
-                            <button id="photo_btn" type="button" onclick="camStart();" data-toggle="modal"
-                                data-target="#modal-default" class="bg-navy btn btn-flat"><i class="fas fa-camera"></i>
-                                <span id="photo_btn_text">{{__('Take a Photo')}}</span> <i id="photo_icon"
-                                    style="display:none;" class="far text-dark fa-check-circle"></i> </button>
-
-                            <input type="text" style="display:none" id="regp_photo" name="regp_photo">
+                            <input type="number" required  class="form-control pull-right"
+                                   name="age_year" placeholder="Birthday" value="0">
                         </div>
                     </div>
                     <div class="form-group">

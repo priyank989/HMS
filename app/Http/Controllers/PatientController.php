@@ -916,7 +916,8 @@ class PatientController extends Controller
         $payment->save();
         $patient = Patients::find($request->pid);
         $doctor = User::find($request->doctor_id);
-        return view('patient.mbill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount]);
+        $type = $request->bill_type;
+        return view('patient.mbill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'type' => $type]);
 
     }
 

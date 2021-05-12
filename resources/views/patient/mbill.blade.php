@@ -83,7 +83,7 @@
                                 <option value="_none">Select</option>
                                 <option value="x-ray">X-ray</option>
                                 <option value="medicine">Medicine</option>
-                                <option value="genral">Genral</option>
+                                <option value="general">General</option>
                             </select>
                         </div>
                     </div>

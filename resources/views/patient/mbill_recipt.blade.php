@@ -31,7 +31,10 @@
                             <td><strong>Patient Name</strong></td>
                             <td>: <strong>{{$patient->name}} <span style="padding-left: 10px;">{{\Carbon\Carbon::parse($patient->bod)->age}} Years | {{$patient->sex}}</span></strong></td>
                         </tr>
-
+                        <tr>
+                            <td><strong>Patient Mobile</strong></td>
+                            <td>: <strong>{{$patient->telephone}} </td>
+                        </tr>
                         <tr>
                             <td><strong>Address</strong></td>
                             <td>: {{$patient->address}}</td>
@@ -57,7 +60,7 @@
                         <tr>
 
                             <td><strong>Bill Date</strong></td>
-                            <td>: {{\Carbon\Carbon::parse($payment->created_at)->format('d-M-Y')}}</td>
+                            <td>: {{\Carbon\Carbon::parse($payment->created_at)->format('d-M-Y h:i:s')}}</td>
                         </tr>
 
                         <tr>

@@ -187,9 +187,9 @@
                                                         <td>{{$patient->sex}}</td>
                                                         <td>{{\Carbon\Carbon::parse($patient->bod)->format('d/M/Y')}}</td>
                                                         <td>
-                                                            {{$patient->payment_id}}
-                                                            <a href="{{$patient->payment_id ? route('billpdf',[$patient->id, $patient->doctor_id,$patient->ipd,$patient->payment_id]) : route('pbill',[$patient->id])}}">{{$patient->payment_id ? 'Receipt | ' : 'Bill Genrate' }}</a>
-                                                            <a href="{{$patient->payment_id ? route('bill_payment_edit',[$patient->id, $patient->doctor_id,$patient->ipd,$patient->payment_id]) : route('pbill',[$patient->id])}}">{{$patient->payment_id ? 'Edit' : '' }}</a>
+                                                            {{$patient->payment_id}}xdxf
+                                                            <a href="{{$patient->payment_id ? route('billpdf',[$patient->id, $patient->doctor_id,$patient->ipd,$patient->payment_id]) : route('pbill',[$patient->id])}}">{{$patient->payment_id ? 'Receipt' : 'Bill Genrate' }}</a>
+
                                                         </td>
                                                     </tr>
                                                 @endforeach

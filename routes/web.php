@@ -51,7 +51,8 @@ Route::get('/patient', ['as' => 'patient', 'uses' => 'PatientController@index'])
 Route::get('/patientregcard/{pid}', ['as' => 'pregcard', 'uses' => 'PatientController@regcard'])->middleware('auth', 'staff');
 Route::post('/patientregister', ['as' => 'patient_register', 'uses' => 'PatientController@registerPatient'])->middleware('auth', 'staff');
 Route::post('/billpayment', ['as' => 'bill_payment', 'uses' => 'PatientController@billPayment'])->middleware('auth', 'staff');
-Route::post('/mbillpayment', ['as' => 'bill_payment', 'uses' => 'PatientController@mbillPayment'])->middleware('auth', 'staff');
+Route::post('/billpaymentupdate/{payment}', ['as' => 'bill_payment_update', 'uses' => 'PatientController@billPaymentUpdate'])->middleware('auth', 'staff');
+Route::post('/mbillpayment', ['as' => 'mbill_payment', 'uses' => 'PatientController@mbillPayment'])->middleware('auth', 'staff');
 
 Route::get('/inpatientregister', ['as' => 'register_in_patient_view', 'uses' => 'PatientController@register_in_patient_view'])->middleware('auth', 'staff', 'lang');
 Route::post('/inpatientregister2', ['as' => 'regInPatient', 'uses' => 'PatientController@regInPatientValid'])->middleware('auth', 'staff', 'lang');
@@ -63,6 +64,9 @@ Route::get('/patientbill/{pid}', ['as' => 'pbill', 'uses' => 'PatientController@
 Route::get('/mpatientbill/{pid}', ['as' => 'mbill', 'uses' => 'PatientController@mbill'])->middleware('auth', 'staff');
 
 Route::get('/billpdf/{patient}/{doctor}/{inpatient}/{payment}', ['as' => 'billpdf', 'uses' => 'PatientController@billPaymentPdf'])->middleware('auth', 'staff');
+Route::get('/bill_payment_edit/{patient}/{doctor}/{inpatient}/{payment}', ['as' => 'bill_payment_edit', 'uses' => 'PatientController@billPaymentEdit'])->middleware('auth', 'staff');
+
+
 Route::get('/regbillpdf/{patient}/{doctor}/{payment}', ['as' => 'regbillpdf', 'uses' => 'PatientController@regbillPaymentPdf'])->middleware('auth', 'staff');
 
 Route::get('/payment-list', ['as' => 'payment-list', 'uses' => 'PaymentController@index'])->middleware('auth', 'staff');

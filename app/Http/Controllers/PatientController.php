@@ -876,7 +876,20 @@ class PatientController extends Controller
     public function billPaymentPdf(Patients $patient, User $doctor, inpatient $inpatient, Payment $payment)
     {
         $total_amount = $payment->total_amount;
-        return view('patient.bill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
+        return view('patient.bill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => billPaymentEdit, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
+    }
+
+    /**
+     * @param Patients $patient
+     * @param User $doctor
+     * @param inpatient $inpatient
+     * @param Payment $payment
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function billPaymentEdit(Patients $patient, User $doctor, inpatient $inpatient, Payment $payment)
+    {
+        $total_amount = $payment->total_amount;
+        return view('patient.bill_edit', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
     }
 
     /**
@@ -928,5 +941,30 @@ class PatientController extends Controller
         $doctor = User::where('user_type', 'doctor')->where('id', $doc_pat->doctor_id)->first();
 //        $inpatient = inpatient::where('patient_id', $id)->whereNull('payment_id')->first();
         return view('patient.mbill', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor->name,'doctorId' => $doctor->id]);
+    }
+
+
+    public function billPaymentUpdate(Request $request, Payment $payment)
+    {
+
+        $total_amount = 0;
+        foreach ($request->service as $service) {
+            $total_amount = $service['amount'] + $total_amount;
+        }
+        $user = Auth::user();
+        $payment->service_name = json_encode($request->service);
+        $payment->total_amount = $total_amount;
+        $payment->paid_amount = $total_amount;
+        $payment->save();
+
+
+
+        $patient = Patients::find($request->toArray())->first();
+        $doctor = User::find($request->doctor_id);
+        $inpatient = inpatient::where('patient_id', $request->pid)->first();
+//        dd($payment->created_at);
+
+        return view('patient.bill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
+
     }
 }

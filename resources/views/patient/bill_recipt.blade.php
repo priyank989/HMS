@@ -31,7 +31,10 @@
                             <td><strong>Patient Name</strong></td>
                             <td>: <strong>{{$patient->name}} <span style="padding-left: 10px;">{{\Carbon\Carbon::parse($patient->bod)->age}} Years | {{$patient->sex}}</span></strong></td>
                         </tr>
-
+                        <tr>
+                            <td><strong>Patient Mobile</strong></td>
+                            <td>: <strong>{{$patient->telephone}} </td>
+                        </tr>
                         <tr>
                             <td><strong>Guardian Name</strong></td>
                             <td>: <strong>{{$patient->guardian}} </strong></td>
@@ -62,7 +65,8 @@
                         <tr>
 
                             <td><strong>Bill Date</strong></td>
-                            <td>: {{\Carbon\Carbon::parse($payment->created_at)->format('d-M-Y')}}</td>
+{{--                            <td>: {{\Carbon\Carbon::parse($payment->created_at)->format('d-M-Y')}}</td>--}}
+{{--                            <td>: {{\Carbon\Carbon::parse($payment->created_at)->format('d-M-Y')}}</td>--}}
                         </tr>
 
                         <tr>
@@ -72,12 +76,12 @@
 
                         <tr>
                             <td><strong>DOA</strong></td>
-                            <td>: {{\Carbon\Carbon::parse($inpatient->created_at)->format('d-M-Y')}}</td>
+                            <td>: {{\Carbon\Carbon::parse($inpatient->created_at)->format('d-M-Y h:i:s')}}</td>
                         </tr>
 
                         <tr>
                             <td><strong>DOD</strong></td>
-                            <td>: {{isset($inpatient->discharged_date) ? \Carbon\Carbon::parse($inpatient->discharged_date)->format('d-M-Y') : ''}}</td>
+                            <td>: {{isset($inpatient->discharged_date) ? \Carbon\Carbon::parse($inpatient->discharged_date)->format('d-M-Y h:i:s') : ''}}</td>
                         </tr>
 
                     </table>

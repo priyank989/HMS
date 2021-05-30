@@ -21,6 +21,7 @@
                     <strong>Shree Pradhan Healthcare private limited</strong>
                     <h5>Reg. Off-At -Khabra P.S-Sadar,Musahari, Muzaffarpur Bihar PIN-842001</h5>
                     <h5>CIN-U85110BR2020PTCO47423</h5>
+                    <h5>Email:shreepradhanhospital@gmail.com | Ph. 9199654999</h5>
                     <h5><strong>Discharge Receipt</strong></h5>
                 </td>
             </tr>
@@ -30,10 +31,6 @@
                         <tr>
                             <td><strong>Patient Name</strong></td>
                             <td>: <strong>{{$patient->name}} <span style="padding-left: 10px;">{{\Carbon\Carbon::parse($patient->bod)->age}} Years | {{$patient->sex}}</span></strong></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Patient Mobile</strong></td>
-                            <td>: <strong>{{$patient->telephone}} </td>
                         </tr>
                         <tr>
                             <td><strong>Guardian Name</strong></td>

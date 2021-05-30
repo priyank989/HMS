@@ -164,8 +164,14 @@
                 'searching': true,
                 'ordering': false,
                 'info': true,
-                'autoWidth': false
+                'autoWidth': false,
+                'orderCellsTop': true,
+                'fixedHeader': true,
+                // this.api().columns( 5 ).every( function () {
+                //
+                // })
             })
+
         })
 
     </script>

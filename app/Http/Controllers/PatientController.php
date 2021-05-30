@@ -876,7 +876,7 @@ class PatientController extends Controller
     public function billPaymentPdf(Patients $patient, User $doctor, inpatient $inpatient, Payment $payment)
     {
         $total_amount = $payment->total_amount;
-        return view('patient.bill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => billPaymentEdit, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
+        return view('patient.bill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'inpatient' => $inpatient]);
     }
 
     /**

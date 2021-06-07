@@ -29,8 +29,12 @@
                 <td style="border: 1px solid;padding: 10px;">
                     <table>
                         <tr>
-                            <td><strong>Patient Name</strong></td>
-                            <td>: <strong>{{$patient->name}} <span style="padding-left: 10px;">{{\Carbon\Carbon::parse($patient->bod)->age}} Years | {{$patient->sex}}</span></strong></td>
+                            <td><strong>Name</strong></td>
+                            <td>: <strong>{{$patient->name}} </strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Age & Gender</strong></td>
+                            <td>: <strong> <span style="padding-left: 10px;">{{\Carbon\Carbon::parse($patient->bod)->age}} Years | {{$patient->sex}}</span></strong></td>
                         </tr>
                         <tr>
                             <td><strong>Guardian Name</strong></td>

@@ -2,9 +2,9 @@
 
 @section('title', $title)
 
-@section('content_title',__('Patient Registration'))
+@section('content_title',__('OPD Receipt'))
 
-@section('content_description',__("Register New Out Patients Here"))
+{{--@section('content_description',__("Register New Out Patients Here"))--}}
 @section('breadcrumbs')
 
     <ol class="breadcrumb">

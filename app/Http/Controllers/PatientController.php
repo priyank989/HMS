@@ -688,7 +688,7 @@ class PatientController extends Controller
             $num = DB::table('appointments')->select('id')->whereRaw(DB::raw("date(created_at)=CURDATE()"))->count() + 1;
             $day_left = Carbon::parse(Carbon::now())->diffInDays($doc_pat->valid_till, false);
             $validity = 1;
-            if ($day_left <= 0) {
+            if ($day_left < 0) {
                 $validity = 0;
             }
             return response()->json([

@@ -41,7 +41,7 @@
                             <td>: <strong>{{$patient->name}} </strong></td>
                         </tr>
                         <tr>
-                            <td><strong>Gender & Age</strong></td>
+                            <td><strong>Age & Gender</strong></td>
                             <td>: <strong> <span style="padding-left: 10px;">{{\Carbon\Carbon::parse($patient->bod)->age}} Years | {{$patient->sex}}</span></strong></td>
                         </tr>
 

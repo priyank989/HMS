@@ -65,7 +65,7 @@ Route::get('/mpatientbill/{pid}', ['as' => 'mbill', 'uses' => 'PatientController
 
 Route::get('/billpdf/{patient}/{doctor}/{inpatient}/{payment}', ['as' => 'billpdf', 'uses' => 'PatientController@billPaymentPdf'])->middleware('auth', 'staff');
 
-//Route::get('/bill_payment_edit/{patient}/{doctor}/{inpatient}/{payment}', ['as' => 'bill_payment_edit', 'uses' => 'PatientController@billPaymentEdit'])->middleware('auth', 'staff');
+Route::get('/bill_payment_edit/{patient}/{doctor}/{inpatient}/{payment}', ['as' => 'bill_payment_edit', 'uses' => 'PatientController@billPaymentEdit'])->middleware('auth', 'staff');
 
 
 Route::get('/regbillpdf/{patient}/{doctor}/{payment}', ['as' => 'regbillpdf', 'uses' => 'PatientController@regbillPaymentPdf'])->middleware('auth', 'staff');

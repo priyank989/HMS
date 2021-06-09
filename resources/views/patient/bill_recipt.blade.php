@@ -66,7 +66,7 @@
                         <tr>
 
                             <td><strong>Bill Date</strong></td>
-{{--                            <td>: {{\Carbon\Carbon::parse($payment->created_at)->format('d-M-Y')}}</td>--}}
+                            <td>: {{\Carbon\Carbon::parse($payment->created_at)->format('d-M-Y')}}</td>
 {{--                            <td>: {{\Carbon\Carbon::parse($payment->created_at)->format('d-M-Y')}}</td>--}}
                         </tr>
 
@@ -77,12 +77,12 @@
 
                         <tr>
                             <td><strong>DOA</strong></td>
-                            <td>: {{\Carbon\Carbon::parse($inpatient->created_at)->format('d-M-Y h:i:s')}}</td>
+                            <td>: {{\Carbon\Carbon::parse($inpatient->created_at)->format('d-M-Y')}}</td>
                         </tr>
 
                         <tr>
                             <td><strong>DOD</strong></td>
-                            <td>: {{isset($inpatient->discharged_date) ? \Carbon\Carbon::parse($inpatient->discharged_date)->format('d-M-Y h:i:s') : ''}}</td>
+                            <td>: {{isset($inpatient->discharged_date) ? \Carbon\Carbon::parse($inpatient->discharged_date)->format('d-M-Y') : ''}}</td>
                         </tr>
 
                     </table>

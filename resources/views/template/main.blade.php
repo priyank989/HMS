@@ -366,6 +366,51 @@ $outlet = 'Shree Pradhan Hospital';
                             <i class="fas fa-tachometer-alt"></i>
                             <span> Dashboard</span></a>
                     </li>
+
+                    @if($user_type!='Pharmacist')
+                    {{--services 
+                    --}}
+                 
+
+                        <li
+                        class="treeview 
+                        {{
+
+                            Active::checkRoute(
+                            ( request()->is('category*') ) ||
+                            ( request()->is('service*') )
+                            )
+
+                    }}">
+                        <a href="#"><i class="fas fa-plus-square"></i><span> Services</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                         <ul class="treeview-menu">
+                                <li class="{{Active::checkRoute('category.index')}}"><a href="{{route('category.index')}}"></i><i
+                                        class="fas fa-list" aria-hidden="true"></i>
+                                    Category</a></li>
+                            <li class="{{Active::checkRoute('category.create')}}"><a href="{{route('category.create')}}"></i><i
+                            class="fas fa-plus-square" aria-hidden="true"></i>
+                        New Category</a></li>
+
+
+
+                           <li class="{{Active::checkRoute('service.index')}}"><a href="{{route('service.index')}}"></i><i
+                                        class="fas fa-list" aria-hidden="true"></i>
+                                    Service</a></li>
+                            <li class="{{Active::checkRoute('service.create')}}"><a href="{{route('service.create')}}"></i><i
+                            class="fas fa-plus-square" aria-hidden="true"></i>
+                        New Service</a></li>
+
+
+                         </ul>
+
+                        </li>
+                    @endIf
+
+
                     @if($user_type!='Pharmacist')
                     {{--patient--}}
                     <li

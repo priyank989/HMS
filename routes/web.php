@@ -152,3 +152,11 @@ Route::get('/wardlist', 'PatientController@get_ward_list');
 // Statistics Routes
 Route::get('/stats', ['as' => 'stats', 'uses' => 'AnalyticsController@index'])->middleware('doctor', 'admin');
 Route::post('/stats-old', ['as' => 'stats_old', 'uses' => 'AnalyticsController@index'])->middleware('doctor', 'admin');
+
+// service route
+Route::group([
+'middleware' => ['auth', 'staff', 'lang']
+], function() {
+    Route::resource('category', 'CategoryController');
+    Route::resource('service', 'ServiceController');
+});

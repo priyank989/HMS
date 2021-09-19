@@ -77,12 +77,12 @@
 
                         <tr>
                             <td><strong>DOA</strong></td>
-                            <td>: {{\Carbon\Carbon::parse($inpatient->created_at)->format('d-M-Y')}}</td>
+                            <td>: {{\Carbon\Carbon::parse($inpatient->created_at)->format('d-M-Y h:i:s')}}</td>
                         </tr>
 
                         <tr>
                             <td><strong>DOD</strong></td>
-                            <td>: {{isset($inpatient->discharged_date) ? \Carbon\Carbon::parse($inpatient->discharged_date)->format('d-M-Y') : ''}}</td>
+                            <td>: {{isset($inpatient->discharged_date) ? \Carbon\Carbon::parse($inpatient->discharged_date)->format('d-M-Y h:i:s') : ''}}</td>
                         </tr>
 
                     </table>
@@ -90,7 +90,8 @@
             </tr>
         </table>
 
-        <table style="border-collapse: collapse;width: 100%; border: 1px solid; text-align: center;">
+        <table style="border-collapse: collapse;width: 100%; border: 1px solid; text-align: center;">+
+
             <tr>
                 <td style="border-bottom: 1px solid;"><strong>S.No.</strong></td>
                 <td style="border-bottom: 1px solid;"><strong>Description</strong></td>

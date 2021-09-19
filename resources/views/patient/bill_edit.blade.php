@@ -200,7 +200,7 @@
                     @php($count=0)
                     @foreach (json_decode($payment->service_name) as $service)
                         @php($count++)
-                        <tr>
+                        <tr class="item-row">
                             <td>
                             </td>
                             <td class="description"><input required type="text" class="form-control" value="{{$service->desc}}" name="service[{{$count}}][desc]"></td>
@@ -243,7 +243,6 @@
                 </div>
             </div>
 
-        </div>
     </form>
     </div>
     </div>
@@ -274,7 +273,7 @@
                 if ($(".delete").length > 0) $(".delete").show();
             });
 
-            $(".delete").on('click',function(){
+            $(document).on('click','.delete', function(){
                 $(this).parents('.item-row').remove();
                 if ($(".delete").length < 2) $(".delete").hide();
             });

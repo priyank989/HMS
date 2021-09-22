@@ -87,22 +87,21 @@
         <table style="border-collapse: collapse;width: 100%; border: 1px solid; text-align: center;">
             <tr>
                 <td style="border-bottom: 1px solid;"><strong>S.No.</strong></td>
-                <td style="border-bottom: 1px solid;"><strong>Description</strong></td>
-                <td style="border-bottom: 1px solid;"><strong>Rate</strong></td>
+                <td style="border-bottom: 1px solid;"><strong>Service</strong></td>
+                <!-- <td style="border-bottom: 1px solid;"><strong>Rate</strong></td> -->
                 <td style="border-bottom: 1px solid;"><strong>QTY.</strong></td>
                 <td style="border-bottom: 1px solid;"><strong>Amount</strong></td>
             </tr>
             @php($count=0)
-            @foreach (json_decode($payment->service_name) as $service)
+            @foreach ($patient->patientService as $service)
                 @php($count++)
                 <tr>
                     <td>{{$count}}
                     </td>
                     <td style="text-align: left;">
-                        {{$service->desc}}
+                        {{$service->service->name}}
                     </td>
-                    <td>{{$service->rate}}</td>
-                    <td>{{$service->unit}}</td>
+                    <td>{{$service->quantity}}</td>
 
                     <td>{{$service->amount}}</td>
                 </tr>

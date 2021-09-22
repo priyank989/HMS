@@ -63,6 +63,9 @@ Route::post('/dischargeInpatient3', ['as' => 'save_disinpatient', 'uses' => 'Pat
 Route::get('/patientbill/{pid}', ['as' => 'pbill', 'uses' => 'PatientController@bill'])->middleware('auth', 'staff');
 Route::get('/mpatientbill/{pid}', ['as' => 'mbill', 'uses' => 'PatientController@mbill'])->middleware('auth', 'staff');
 
+Route::get('ajax/mpatientbill/{count?}', 'PatientController@ajaxAddService')->name('ajax.mpatientbill');
+
+
 Route::get('/billpdf/{patient}/{doctor}/{inpatient}/{payment}', ['as' => 'billpdf', 'uses' => 'PatientController@billPaymentPdf'])->middleware('auth', 'staff');
 
 Route::get('/bill_payment_edit/{patient}/{doctor}/{inpatient}/{payment}', ['as' => 'bill_payment_edit', 'uses' => 'PatientController@billPaymentEdit'])->middleware('auth', 'staff');

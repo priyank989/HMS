@@ -16,6 +16,8 @@ use App\Ward;
 use Carbon\Carbon;
 use DB;
 use App\User;
+use App\Service;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -908,12 +910,14 @@ class PatientController extends Controller
 
     public function mbillPayment(Request $request)
     {
-        $total_amount = 0;
-        foreach ($request->service as $service) {
-            $total_amount = $service['amount'] + $total_amount;
-        }
+        $total_amount =array_sum( array_map(
+            function ($ser) {
+                    return $ser['amount'];
+            } , $request->service
+        )) ;
         $payment = new Payment();
         $user = Auth::user();
+        
         $payment->updated_by = $user->id;
         $payment->created_by = $user->id;
         $payment->doctor_id = $request->doctor_id;
@@ -928,9 +932,27 @@ class PatientController extends Controller
         $payment->paid_amount = $total_amount;
         $payment->save();
         $patient = Patients::find($request->pid);
+
+        foreach ($request->service as $service) {
+            $patient->patientService()->create(
+                [
+                    'service_id' => $service['service'],
+                    'quantity' => $service['unit'],
+                    'amount' =>$service['amount']
+                ]
+            );
+            // $total_amount = $service['amount'] + $total_amount;
+        }
         $doctor = User::find($request->doctor_id);
         $type = $request->bill_type;
-        return view('patient.mbill_recipt', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'type' => $type]);
+        // dd($payment);
+        
+    //    dd( $patient);
+        return view('patient.mbill_recipt', ['title' => "Bill Recipt", 
+        'patient' => $patient->loadMissing(['patientService' => function ($query) {
+            return $query->with('service');
+        }]), 
+        'doctor' => $doctor, 'payment' => $payment, 'total_amount' => $total_amount, 'type' => $type]);
 
     }
 
@@ -941,6 +963,16 @@ class PatientController extends Controller
         $doctor = User::where('user_type', 'doctor')->where('id', $doc_pat->doctor_id)->first();
 //        $inpatient = inpatient::where('patient_id', $id)->whereNull('payment_id')->first();
         return view('patient.mbill', ['title' => "Bill Recipt", 'patient' => $patient, 'doctor' => $doctor->name,'doctorId' => $doctor->id]);
+    }
+
+    public function ajaxAddService($count)
+    {
+        return view('patient._ajax.service', [
+            'count' => $count,
+            'category' => Category::pluck('name', 'id'),
+            'service' => Service::toBase()->get()
+        ]);
+
     }
 
 

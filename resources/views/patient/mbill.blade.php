@@ -182,25 +182,26 @@
 
                     <button type="button" id="addrow" class="btn btn-primary btn-sm">Add More</button>
                 </div>
-                <table id="items" class="table detail-table">
+                <table style = "width: 90% !important"  id="items" class="table detail-table">
 
                     <tr>
                         <th>S.No.</th>
+                        <th>Category</th>
                         <th>Service</th>
 
-                        <th>Rate</th>
+                        <!-- <th>Rate</th> -->
                         <th>QTY.</th>
                         <th>Amount</th>
                         <th>Action</th>
                     </tr>
 
                     <tr class="item-row">
-                        <td></td>
+                        <!-- <td></td>
                         <td class="description"><input required type="text" class="form-control" name="service[0][desc]"></td>
                         <td><input required type="number" class="form-control reg_rate" name="service[0][rate]"></td>
                         <td><input required type="number" class="form-control reg_unit" name="service[0][unit]"></td>
                         <td><input required type="number" class="form-control reg_amount" name="service[0][amount]"></td>
-                        <td><button type="button" class="delete btn btn-sm btn-danger">Remove</button></td>
+                        <td><button type="button" class="delete btn btn-sm btn-danger">Remove</button></td> -->
                     </tr>
 
 {{--                    <tr class="item-row">--}}
@@ -251,25 +252,33 @@
         var count = 0;
             $("#addrow").click(function(){
                 count++;
-                $(".item-row:last").after('<tr class="item-row"><td></td><td class="description"><input required type="text" class="form-control" name="service['+count+'][desc]"></td><td><input required type="number" class="form-control reg_rate" name="service['+count+'][rate]"></td><td><input required type="number" class="form-control reg_unit" name="service['+count+'][unit]"></td><td><input required type="number" class="form-control reg_amount" name="service['+count+'][amount]"></td><td><button type="button" class="delete btn btn-sm btn-danger">Remove</button></td></tr>');
-                if ($(".delete").length > 0) $(".delete").show();
+                $.ajax({
+                    url: '/ajax/mpatientbill/'+count,
+                    method: 'get',
+                    success: function(data) {
+                        $(".item-row:last").after(data);
+                    }
+                })
+                // $(".item-row:last").after('<tr class="item-row"><td></td><td class="description"><input required type="text" class="form-control" name="service['+count+'][desc]"></td><td><input required type="number" class="form-control reg_rate" name="service['+count+'][rate]"></td><td><input required type="number" class="form-control reg_unit" name="service['+count+'][unit]"></td><td><input required type="number" class="form-control reg_amount" name="service['+count+'][amount]"></td><td><button type="button" class="delete btn btn-sm btn-danger">Remove</button></td></tr>');
+                // if ($(".delete").length > 0) $(".delete").show();
             });
 
-            $(".delete").on('click',function(){
-                $(this).parents('.item-row').remove();
-                if ($(".delete").length < 2) $(".delete").hide();
-            });
+            // $(".delete").on('click',function(){
+            //     alert('chck');
+            //     $(this).parents('.item-row').remove();
+            //     if ($(".delete").length < 2) $(".delete").hide();
+            // });
 
-            $(document).on('focusout','.reg_rate', function(){
-                var rate = $(this).val();
-                var unit = $(this).parent().next().children().val();
-                $(this).parent().next().next().children().val(rate*unit);
-            });
-            $(document).on('focusout','.reg_unit', function(){
-                var unit = $(this).val();
-                var rate = $(this).parent().prev().children().val();
-                $(this).parent().next().children().val(rate*unit);
-            });
+            // $(document).on('focusout','.reg_rate', function(){
+            //     var rate = $(this).val();
+            //     var unit = $(this).parent().next().children().val();
+            //     $(this).parent().next().next().children().val(rate*unit);
+            // });
+            // $(document).on('focusout','.reg_unit', function(){
+            //     var unit = $(this).val();
+            //     var rate = $(this).parent().prev().children().val();
+            //     $(this).parent().next().children().val(rate*unit);
+            // });
         });
     </script>
 @endsection

@@ -56,4 +56,9 @@ class Patients extends Model
         return $this->belongsToMany(User::class, 'doctor_patients', 'patient_id', 'doctor_id')->where('type', Project::types['sub-project']);;
 
     }
+
+    public function patientService()
+    {
+        return $this->hasMany(PatientService::class);
+    }
 }
